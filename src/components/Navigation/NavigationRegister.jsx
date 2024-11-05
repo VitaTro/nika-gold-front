@@ -8,7 +8,7 @@ import {
 } from "./Navigation.styled";
 import logoUrl from "./logo.png";
 
-const Navigation = () => {
+const NavigationRegister = () => {
   return (
     <Container>
       <Header>
@@ -31,4 +31,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default NavigationRegister;

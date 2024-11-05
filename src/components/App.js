@@ -1,11 +1,19 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
 import { SignInPage } from "../pages/SignInPage";
-import { WelcomePage } from "../pages/WelcomePage";
-import Navigation from "./Navigation/Navigation";
-// import Search from "./Search/Search";
+import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
+import NavigationPersonal from "./Navigation/NavigationPersonal";
+import NavigationRegister from "./Navigation/NavigationRegister";
 
+// import Search from "./Search/Search";
+const Navigation = () => {
+  const location = useLocation();
+  if (location.pathname === "/" || location.pathname === "/auth") {
+    return <NavigationRegister />;
+  }
+  return <NavigationPersonal />;
+};
 export const App = () => {
   return (
     <div>
