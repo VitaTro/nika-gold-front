@@ -1,1 +1,1 @@
-https://vitatro.github.io/nika-gold-front/
+https://nika-gold.netlify.app/
