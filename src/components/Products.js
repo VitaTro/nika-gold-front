@@ -28,13 +28,13 @@ const Products = ({ type }) => {
   }, [type]);
 
   return (
-    <div className="products-container">
+    <div>
       <h1>
         {type ? type.charAt(0).toUpperCase() + type.slice(1) : "All"} Products
       </h1>
-      <div className="products-grid">
+      <div>
         {products.map((product) => (
-          <div key={product._id} className="product-card">
+          <div key={product._id}>
             <h2>{product.name}</h2>
             <img src={product.photoUrl} alt={product.name} />
             <p>{product.description}</p>

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Container,
   Header,
@@ -6,14 +7,16 @@ import {
   NavLinkStyled,
   NavList,
 } from "./Navigation.styled";
-import logoUrl from "./logo.png";
 
 const NavigationPersonal = () => {
+  const logoUrl =
+    "https://res.cloudinary.com/dblh78pvc/image/upload/f_auto,q_auto/v1/My%20Brand/logo_smqqi7?_a=BAMCkGRg0";
+
   return (
     <Container>
       <Header>
         <NavLinkStyled to="/">
-          <LogoImage src={logoUrl} alt="logo" />
+          <LogoImage src={logoUrl} alt="My brand logo" />
         </NavLinkStyled>
         <NavList>
           <NavItem>
