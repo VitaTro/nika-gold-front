@@ -17,7 +17,7 @@ const NavigationPersonal = () => {
         </NavLinkStyled>
         <NavList>
           <NavItem>
-            <NavLinkStyled to="/product">Wyroby</NavLinkStyled>
+            <NavLinkStyled to="/products">Wyroby</NavLinkStyled>
           </NavItem>
           <NavItem>
             <NavLinkStyled to="/contact">Kontakty</NavLinkStyled>
