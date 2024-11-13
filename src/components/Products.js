@@ -28,15 +28,21 @@ const Products = ({ type }) => {
   }, [type]);
 
   return (
-    <div>
+    <div className="products-container">
       <h1>
         {type ? type.charAt(0).toUpperCase() + type.slice(1) : "All"} Products
       </h1>
-      <div>
+      <div className="products-grid">
         {products.map((product) => (
-          <div key={product._id}>
+          <div key={product._id} className="product-card">
             <h2>{product.name}</h2>
-            <img src={product.photoUrl} alt={product.name} />
+            <img
+              src={product.photoUrl}
+              alt={product.name}
+              onError={(e) => {
+                e.target.src = "placeholder.jpg";
+              }}
+            />
             <p>{product.description}</p>
             {isAuthenticated && <p>Price: ${product.price}</p>}
           </div>

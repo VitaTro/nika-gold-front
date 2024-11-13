@@ -6,6 +6,7 @@ import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
 import AuthFormRegister from "./AuthForm/AuthFormRegister";
+import ImageComponent from "./ImageComponent";
 import NavigationPersonal from "./Navigation/NavigationPersonal";
 import NavigationRegister from "./Navigation/NavigationRegister";
 import Products from "./Products";
@@ -45,13 +46,16 @@ export const App = () => {
         <Route
           path="/auth/admin/register"
           element={<AuthFormRegister isAdmin={true} />}
-        />{" "}
+        />
         <Route
           path="/auth/admin/login"
           element={<AuthFormLogin isAdmin={true} />}
         />
         <Route path="/upload" element={<UploadImage />} />
-        <Route path="/products" element={<Products type="allProducts" />} />
+        <Route
+          path="/products"
+          element={<ImageComponent publicID="cld-sample-5" />}
+        />
         <Route path="/products/gold" element={<GoldProducts />} />
         <Route path="/products/silver" element={<SilverProducts />} />
         <Route path="/products/set" element={<SetProducts />} />
