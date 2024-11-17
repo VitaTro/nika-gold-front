@@ -9,7 +9,7 @@ import AuthFormRegister from "./AuthForm/AuthFormRegister";
 import ImageComponent from "./ImageComponent";
 import NavigationPersonal from "./Navigation/NavigationPersonal";
 import NavigationRegister from "./Navigation/NavigationRegister";
-import Products from "./Products";
+import Products from "./Products/Products";
 import UploadImage from "./UploadImage/UploadImage";
 
 const GoldProducts = () => <Products type="gold" />;
