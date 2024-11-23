@@ -17,7 +17,7 @@ export const WelcomeList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  row-gap: 100px;
+  row-gap: 70px;
   gap: 70px;
 `;
 export const WelcomeItem = styled.li`

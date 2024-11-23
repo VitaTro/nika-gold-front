@@ -1,22 +1,18 @@
 import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
 import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
+import BoxProducts from "./AllProducts/BoxProduct/BoxProducts";
+import GoldProducts from "./AllProducts/GoldProduct/GoldProducts";
+import SetProducts from "./AllProducts/SetProduct/SetProducts";
+import SilverProducts from "./AllProducts/SilverProduct/SilverProducts";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
 import AuthFormRegister from "./AuthForm/AuthFormRegister";
-import ImageComponent from "./ImageComponent";
 import NavigationPersonal from "./Navigation/NavigationPersonal";
 import NavigationRegister from "./Navigation/NavigationRegister";
-import Products from "./Products/Products";
 import UploadImage from "./UploadImage/UploadImage";
-
-const GoldProducts = () => <Products type="gold" />;
-const SilverProducts = () => <Products type="silver" />;
-const SetProducts = () => <Products type="set" />;
-const BoxProducts = () => <Products type="box" />;
-
 const Navigation = () => {
   const location = useLocation();
   if (
@@ -52,16 +48,16 @@ export const App = () => {
           element={<AuthFormLogin isAdmin={true} />}
         />
         <Route path="/upload" element={<UploadImage />} />
-        <Route
-          path="/products"
-          element={<ImageComponent publicID="cld-sample-5" />}
-        />
         <Route path="/products/gold" element={<GoldProducts />} />
         <Route path="/products/silver" element={<SilverProducts />} />
         <Route path="/products/set" element={<SetProducts />} />
         <Route path="/products/box" element={<BoxProducts />} />
+        {/* Перенаправлення за замовчуванням для /products */}
+        <Route
+          path="/products"
+          element={<Navigate to="/products/gold" replace />}
+        />
       </Routes>
-      {/* </Suspense> */}
     </div>
   );
 };
