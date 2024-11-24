@@ -1,11 +1,12 @@
 import React from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
 import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
 import BoxProducts from "./AllProducts/BoxProduct/BoxProducts";
 import GoldProducts from "./AllProducts/GoldProduct/GoldProducts";
+import Products from "./AllProducts/Products/Products"; // Додамо компонент Products
 import SetProducts from "./AllProducts/SetProduct/SetProducts";
 import SilverProducts from "./AllProducts/SilverProduct/SilverProducts";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
@@ -48,15 +49,12 @@ export const App = () => {
           element={<AuthFormLogin isAdmin={true} />}
         />
         <Route path="/upload" element={<UploadImage />} />
+        <Route path="/products" element={<Products />} />{" "}
+        {/* Додано маршрут для всіх продуктів */}
         <Route path="/products/gold" element={<GoldProducts />} />
         <Route path="/products/silver" element={<SilverProducts />} />
         <Route path="/products/set" element={<SetProducts />} />
         <Route path="/products/box" element={<BoxProducts />} />
-        {/* Перенаправлення за замовчуванням для /products */}
-        <Route
-          path="/products"
-          element={<Navigate to="/products/gold" replace />}
-        />
       </Routes>
     </div>
   );

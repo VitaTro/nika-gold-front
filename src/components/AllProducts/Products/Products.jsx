@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { WelcomeGeneral } from "../../pages/WelcomePage/WelcomePage.styled";
+
+import { WelcomeHeader } from "../BoxProduct/BoxProducts.styled";
 import {
   PageLink,
   Pagination,
@@ -28,6 +29,7 @@ const Products = ({ type }) => {
         const response = await axios.get(
           `http://localhost:5000/api/${endpoint}`
         );
+        console.log("Fetched products:", response.data);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -37,31 +39,23 @@ const Products = ({ type }) => {
     fetchData();
   }, [type]);
 
-  // pagination
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProduct = products.slice(
+  const currentProducts = products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <ProductsContainer>
-      <WelcomeGeneral>
-        {type ? type.charAt(0).toUpperCase() + type.slice(1) : "All"} Products
-      </WelcomeGeneral>
+      <WelcomeHeader>Wszystkie wyroby</WelcomeHeader>
       <ProductsGrid>
-        {currentProduct.map((product) => (
+        {currentProducts.map((product) => (
           <ProductCard key={product._id}>
             <h2>{product.name}</h2>
-            <ProductImage
-              src={product.photoUrl}
-              alt={product.name}
-              // onError={(e) => {
-              //   e.target.src = "placeholder.jpg";
-              // }}
-            />
+            <ProductImage src={product.photoUrl} alt={product.name} />
             <p>{product.description}</p>
             {isAuthenticated && <p>Price: ${product.price}</p>}
           </ProductCard>

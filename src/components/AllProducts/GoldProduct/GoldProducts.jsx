@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ImageComponent from "../../ImageComponent";
 import {
   Card,
   Grid,
-  Image,
   PageButton,
   Pagination,
   ProductsContainer,
@@ -70,76 +70,65 @@ const GoldProducts = () => {
           onClick={() => handleCategoryChange("chains")}
           className={activeCategory === "chains" ? "active" : ""}
         >
-          {" "}
-          Łańcuchy{" "}
-        </TabButton>{" "}
+          Łańcuchy
+        </TabButton>
         <TabButton
           onClick={() => handleCategoryChange("earrings")}
           className={activeCategory === "earrings" ? "active" : ""}
         >
-          {" "}
-          Kolczyki{" "}
-        </TabButton>{" "}
+          Kolczyki
+        </TabButton>
         <TabButton
           onClick={() => handleCategoryChange("bracelets")}
           className={activeCategory === "bracelets" ? "active" : ""}
         >
-          {" "}
-          Bransoletki{" "}
-        </TabButton>{" "}
+          Bransoletki
+        </TabButton>
         <TabButton
           onClick={() => handleCategoryChange("rings")}
           className={activeCategory === "rings" ? "active" : ""}
         >
-          {" "}
-          Pierścienie{" "}
-        </TabButton>{" "}
+          Pierścienie
+        </TabButton>
         <TabButton
           onClick={() => handleCategoryChange("pendants")}
           className={activeCategory === "pendants" ? "active" : ""}
         >
-          {" "}
-          Zawieszki{" "}
-        </TabButton>{" "}
+          Zawieszki
+        </TabButton>
         <TabButton
           onClick={() => handleCategoryChange("tic")}
           className={activeCategory === "tic" ? "active" : ""}
         >
-          {" "}
-          Krzyży{" "}
-        </TabButton>{" "}
+          Krzyży
+        </TabButton>
         <TabButton
           onClick={() => handleCategoryChange("incense")}
           className={activeCategory === "incense" ? "active" : ""}
         >
-          {" "}
-          Kadzidło{" "}
-        </TabButton>{" "}
-      </Tabs>{" "}
+          Kadzidło
+        </TabButton>
+      </Tabs>
       <Grid>
-        {" "}
         {currentProducts.map((product) => (
           <Card key={product._id}>
-            {" "}
-            <h2>{product.name}</h2>{" "}
-            <Image src={product.photoUrl} alt={product.name} />{" "}
-            <p>{product.description}</p>{" "}
-            {isAuthenticated && <p>Price: ${product.price}</p>}{" "}
+            <h2>{product.name}</h2>
+            <ImageComponent src={product.photoUrl} alt={product.name} />
+            <p>{product.description}</p>
+            {isAuthenticated && <p>Price: ${product.price}</p>}
           </Card>
-        ))}{" "}
-      </Grid>{" "}
+        ))}
+      </Grid>
       <Pagination>
-        {" "}
         {Array.from(
           { length: Math.ceil(filteredProducts.length / productsPerPage) },
           (_, index) => (
             <PageButton key={index} onClick={() => paginate(index + 1)}>
-              {" "}
-              {index + 1}{" "}
+              {index + 1}
             </PageButton>
           )
-        )}{" "}
-      </Pagination>{" "}
+        )}
+      </Pagination>
     </ProductsContainer>
   );
 };
