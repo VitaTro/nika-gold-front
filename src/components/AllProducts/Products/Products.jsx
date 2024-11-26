@@ -52,14 +52,21 @@ const Products = ({ type }) => {
     <ProductsContainer>
       <WelcomeHeader>Wszystkie wyroby</WelcomeHeader>
       <ProductsGrid>
-        {currentProducts.map((product) => (
-          <ProductCard key={product._id}>
-            <h2>{product.name}</h2>
-            <ProductImage src={product.photoUrl} alt={product.name} />
-            <p>{product.description}</p>
-            {isAuthenticated && <p>Price: ${product.price}</p>}
-          </ProductCard>
-        ))}
+        {currentProducts.map((product) => {
+          console.log("Rendering product:", product);
+          return (
+            <ProductCard key={product._id}>
+              <h2>{product.name}</h2>
+              {product.photoUrl ? (
+                <ProductImage src={product.photoUrl} alt={product.name} />
+              ) : (
+                <div>No image available</div>
+              )}
+              <p>{product.description}</p>
+              {isAuthenticated && <p>Price: ${product.price}</p>}
+            </ProductCard>
+          );
+        })}
       </ProductsGrid>
       <Pagination>
         {Array.from(

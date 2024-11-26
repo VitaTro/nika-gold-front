@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ImageComponent from "../../ImageComponent";
+import ImageComponent from "../../ImageComponent/ImageComponent";
 import {
   Card,
   Container,

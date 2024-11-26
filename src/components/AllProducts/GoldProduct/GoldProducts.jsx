@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ImageComponent from "../../ImageComponent";
+import ImageComponent from "../../ImageComponent/ImageComponent";
 import {
   Card,
   Grid,
@@ -11,6 +11,7 @@ import {
   Tabs,
   WelcomeHeader,
 } from "./GoldProducts.styled";
+
 const GoldProducts = () => {
   const [products, setProducts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,7 +46,7 @@ const GoldProducts = () => {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(
+  const currentProducts = filteredProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
@@ -56,6 +57,7 @@ const GoldProducts = () => {
     setActiveCategory(category);
     setCurrentPage(1);
   };
+
   return (
     <ProductsContainer>
       <WelcomeHeader>Gold Products</WelcomeHeader>
@@ -132,4 +134,5 @@ const GoldProducts = () => {
     </ProductsContainer>
   );
 };
+
 export default GoldProducts;

@@ -13,6 +13,9 @@ export const ProductCard = styled.div`
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 10px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 `;
 export const ProductImage = styled.img`
   width: 100%;
