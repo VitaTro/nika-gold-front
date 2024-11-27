@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ImageComponent from "../../ImageComponent/ImageComponent";
 import {
   Card,
   Grid,
@@ -12,11 +11,12 @@ import {
   WelcomeHeader,
 } from "./GoldProducts.styled";
 
-const GoldProducts = () => {
+const GoldProducts = ({ type }) => {
   const [products, setProducts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [isSlowConnection, setIsSlowConnection] = useState(false);
   const productsPerPage = 24;
 
   useEffect(() => {
@@ -27,26 +27,56 @@ const GoldProducts = () => {
 
     const fetchData = async () => {
       try {
+        const endpoint =
+          activeCategory === "all"
+            ? "products/gold"
+            : `products/gold?subcategory=${activeCategory}`;
         const response = await axios.get(
-          "http://localhost:5000/api/products/gold"
+          `http://localhost:5000/api/${endpoint}`
         );
-        setProducts(response.data);
+        console.log("Fetched gold products:", response.data);
+
+        // Сортування продуктів за датою створення, нові на початку
+        const sortedProducts = response.data.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB - dateA; // нові продукти на початку
+        });
+
+        setProducts(sortedProducts);
       } catch (error) {
-        console.error("Error fetching data", error);
+        console.error("Error fetching gold data", error);
       }
     };
     fetchData();
-  }, []);
 
-  // filter products
-  const filteredProducts =
-    activeCategory === "all"
-      ? products
-      : products.filter((product) => product.subcategory === activeCategory);
+    const updateConnectionStatus = () => {
+      const connection =
+        navigator.connection ||
+        navigator.mozConnection ||
+        navigator.webkitConnection;
+      if (connection) {
+        const slowConnectionTypes = ["slow-2g", "2g", "3g"];
+        setIsSlowConnection(
+          slowConnectionTypes.includes(connection.effectiveType)
+        );
+      }
+    };
+
+    updateConnectionStatus();
+    navigator.connection.addEventListener("change", updateConnectionStatus);
+
+    return () => {
+      navigator.connection.removeEventListener(
+        "change",
+        updateConnectionStatus
+      );
+    };
+  }, [type, activeCategory]);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(
+  const currentProducts = products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
@@ -112,18 +142,25 @@ const GoldProducts = () => {
         </TabButton>
       </Tabs>
       <Grid>
-        {currentProducts.map((product) => (
-          <Card key={product._id}>
-            <h2>{product.name}</h2>
-            <ImageComponent src={product.photoUrl} alt={product.name} />
-            <p>{product.description}</p>
-            {isAuthenticated && <p>Price: ${product.price}</p>}
-          </Card>
-        ))}
+        {currentProducts.map((product) => {
+          console.log("Product photoUrl: ", product.photoUrl);
+          return (
+            <Card key={product._id}>
+              <h2>{product.name}</h2>
+              <img
+                src={product.photoUrl}
+                alt={product.name}
+                style={{ maxWidth: "100%", height: "auto" }}
+              />
+              {isSlowConnection && <p>{product.description}</p>}
+              {isAuthenticated && <p>Price: ${product.price}</p>}
+            </Card>
+          );
+        })}
       </Grid>
       <Pagination>
         {Array.from(
-          { length: Math.ceil(filteredProducts.length / productsPerPage) },
+          { length: Math.ceil(products.length / productsPerPage) },
           (_, index) => (
             <PageButton key={index} onClick={() => paginate(index + 1)}>
               {index + 1}

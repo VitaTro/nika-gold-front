@@ -5,8 +5,15 @@ export const Container = styled.div`
   padding: 20px;
 `;
 
-export const WelcomeHeader = styled.h1`
-  margin-bottom: 20px;
+export const WelcomeHeader = styled.h2`
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: gray;
+  text-shadow: 0 0 5px rgb(167, 182, 208);
 `;
 
 export const Grid = styled.div`
