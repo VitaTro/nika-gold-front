@@ -4,15 +4,11 @@ import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
 import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
-import BoxProducts from "./AllProducts/BoxProduct/BoxProducts";
-import GoldProducts from "./AllProducts/GoldProduct/GoldProducts";
-import Products from "./AllProducts/Products/Products"; // Додамо компонент Products
-import SetProducts from "./AllProducts/SetProduct/SetProducts";
-import SilverProducts from "./AllProducts/SilverProduct/SilverProducts";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
 import AuthFormRegister from "./AuthForm/AuthFormRegister";
 import NavigationPersonal from "./Navigation/NavigationPersonal";
 import NavigationRegister from "./Navigation/NavigationRegister";
+import Products from "./Products/Products";
 import UploadImage from "./UploadImage/UploadImage";
 const Navigation = () => {
   const location = useLocation();
@@ -49,12 +45,12 @@ export const App = () => {
           element={<AuthFormLogin isAdmin={true} />}
         />
         <Route path="/upload" element={<UploadImage />} />
-        <Route path="/products" element={<Products />} />{" "}
+        <Route path="/products" element={<Products type="all" />} />
         {/* Додано маршрут для всіх продуктів */}
-        <Route path="/products/gold" element={<GoldProducts />} />
-        <Route path="/products/silver" element={<SilverProducts />} />
-        <Route path="/products/set" element={<SetProducts />} />
-        <Route path="/products/box" element={<BoxProducts />} />
+        <Route path="/products/gold" element={<Products type="gold" />} />
+        <Route path="/products/silver" element={<Products type="silver" />} />
+        <Route path="/products/set" element={<Products type="set" />} />
+        <Route path="/products/box" element={<Products type="box" />} />
       </Routes>
     </div>
   );

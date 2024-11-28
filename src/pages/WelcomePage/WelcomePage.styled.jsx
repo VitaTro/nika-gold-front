@@ -36,7 +36,7 @@ export const BoxContainer = styled.div`
   width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
   &:hover {
