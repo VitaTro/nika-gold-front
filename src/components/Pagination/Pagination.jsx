@@ -1,8 +1,17 @@
 import React from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // Імпортуємо іконки
-import { PageLink, Pagination } from "../components/Products/Products.styled";
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { PageLink, Pagination } from "../Products/Products.styled";
+import emptyImage from "./empty.jpeg";
+import { EmptyState, StyledImage } from "./Pagination.styled";
 const PaginationComponent = ({ totalPages, currentPage, onPageChange }) => {
+  if (totalPages === 0) {
+    return (
+      <EmptyState>
+        <StyledImage src={emptyImage} alt="No results" />
+        <p>No results</p>
+      </EmptyState>
+    );
+  }
   const pages = [];
   const maxVisiblePages = 5;
 
@@ -94,19 +103,24 @@ const PaginationComponent = ({ totalPages, currentPage, onPageChange }) => {
 
   return (
     <Pagination>
-      <PageLink
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        <FaArrowLeft /> {/* Іконка стрілки вліво */}
-      </PageLink>
+      {totalPages > maxVisiblePages && (
+        <PageLink
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          <FaArrowLeft /> {/* Іконка стрілки вліво */}
+        </PageLink>
+      )}
+
       {pages}
-      <PageLink
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        <FaArrowRight /> {/* Іконка стрілки вправо */}
-      </PageLink>
+      {totalPages > maxVisiblePages && (
+        <PageLink
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          <FaArrowRight /> {/* Іконка стрілки вправо */}
+        </PageLink>
+      )}
     </Pagination>
   );
 };

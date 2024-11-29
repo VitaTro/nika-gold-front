@@ -12,8 +12,8 @@ export const ImagePlaceholder = styled.div`
   background-color: #f0f0f0;
 `;
 export const StyledImage = styled(AdvancedImage)`
-  width: 100%;
-  height: auto;
+  // width: 100%;
+  // height: auto;
   object-fit: cover;
   aspect-ratio: 1/1;
 `;

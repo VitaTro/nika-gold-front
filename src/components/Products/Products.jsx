@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Loader } from "../Loader/Loader";
-import PaginationComponent from "../Pagination";
+import PaginationComponent from "../Pagination/Pagination";
 import ProductImageWithLightbox from "../ProductImageWithLightbox";
 import {
   ProductCard,
   ProductsContainer,
   ProductsGrid,
+  ProductsHeader,
   TabButton,
   Tabs,
   WelcomeHeader,
@@ -102,7 +103,10 @@ const Products = ({ type }) => {
     indexOfLastProduct
   );
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -179,7 +183,7 @@ const Products = ({ type }) => {
               console.log(`Rendering product ${index}: `, product);
               return (
                 <ProductCard key={product._id}>
-                  <h2>{product.name}</h2>
+                  <ProductsHeader>{product.name}</ProductsHeader>
                   {product.photoUrl ? (
                     <ProductImageWithLightbox
                       src={product.photoUrl}

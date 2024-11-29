@@ -3,6 +3,7 @@ import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 import { ImagePlaceholder, StyledImage } from "./ImageComponent.styled";
 
 const ImageComponent = ({ publicID }) => {
@@ -33,9 +34,10 @@ const ImageComponent = ({ publicID }) => {
     console.error("Error creating image:", error);
     return (
       <ImagePlaceholder>
-        <FontAwesomeIcon icon={faImage} size="4x" />{" "}
+        <FontAwesomeIcon icon={faImage} size="4x" />
       </ImagePlaceholder>
     );
   }
 };
+
 export default ImageComponent;

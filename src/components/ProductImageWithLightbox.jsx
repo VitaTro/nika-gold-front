@@ -37,7 +37,12 @@ const ProductImageWithLightbox = ({ src, alt }) => {
         src={src}
         alt={alt}
         onClick={() => setIsOpen(true)}
-        style={{ cursor: "pointer", maxWidth: "100%", height: "auto" }} // Додаємо обмеження на ширину
+        style={{
+          cursor: "pointer",
+          width: "100%",
+          height: "350px", // Фіксована висота
+          objectFit: "cover",
+        }}
       />
       {isOpen && (
         <Lightbox src={src} alt={alt} onClose={() => setIsOpen(false)} />
