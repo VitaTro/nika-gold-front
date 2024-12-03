@@ -1,4 +1,7 @@
+// NavigationPersonal.js
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../../redux/themeSlice";
 import {
   Container,
   Header,
@@ -6,9 +9,12 @@ import {
   NavItem,
   NavLinkStyled,
   NavList,
+  ThemeToggle,
 } from "./Navigation.styled";
 
 const NavigationPersonal = () => {
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const logoUrl =
     "https://res.cloudinary.com/dblh78pvc/image/upload/f_auto,q_auto/v1/My%20Brand/logo_smqqi7?_a=BAMCkGRg0";
 
@@ -29,8 +35,11 @@ const NavigationPersonal = () => {
             <NavLinkStyled to="/about">O nas</NavLinkStyled>
           </NavItem>
           <NavItem>
-            <NavLinkStyled to="/auth">Log In / Registracja</NavLinkStyled>
+            <NavLinkStyled to="/auth">Log In</NavLinkStyled>
           </NavItem>
+          <ThemeToggle onClick={() => dispatch(toggleTheme())}>
+            {isDarkMode ? "🌙" : "☀️"}
+          </ThemeToggle>
         </NavList>
       </Header>
     </Container>

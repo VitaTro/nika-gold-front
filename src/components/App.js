@@ -1,57 +1,59 @@
 import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
 import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
 import AuthFormRegister from "./AuthForm/AuthFormRegister";
-import NavigationPersonal from "./Navigation/NavigationPersonal";
-import NavigationRegister from "./Navigation/NavigationRegister";
+import Navigation from "./Navigation/Navigation";
+
+import { useSelector } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "../redux/GlobalStyles";
 import Products from "./Products/Products";
 import UploadImage from "./UploadImage/UploadImage";
-const Navigation = () => {
-  const location = useLocation();
-  if (
-    location.pathname === "/" ||
-    location.pathname === "/auth" ||
-    location.pathname.startsWith("/auth")
-  ) {
-    return <NavigationRegister />;
-  }
-  return <NavigationPersonal />;
-};
 
 export const App = () => {
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+  const theme = {
+    isDarkMode,
+  };
   return (
-    <div>
-      <Navigation />
-      <Routes>
-        <Route index path="/" element={<WelcomePage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/auth" element={<SignInPage />} />
-        <Route
-          path="/auth/register"
-          element={<AuthFormRegister isAdmin={false} />}
-        />
-        <Route path="/auth/login" element={<AuthFormLogin isAdmin={false} />} />
-        <Route
-          path="/auth/admin/register"
-          element={<AuthFormRegister isAdmin={true} />}
-        />
-        <Route
-          path="/auth/admin/login"
-          element={<AuthFormLogin isAdmin={true} />}
-        />
-        <Route path="/upload" element={<UploadImage />} />
-        <Route path="/products" element={<Products type="all" />} />
-        {/* Додано маршрут для всіх продуктів */}
-        <Route path="/products/gold" element={<Products type="gold" />} />
-        <Route path="/products/silver" element={<Products type="silver" />} />
-        <Route path="/products/set" element={<Products type="set" />} />
-        <Route path="/products/box" element={<Products type="box" />} />
-      </Routes>
-    </div>
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyles />
+        <Navigation />
+        <Routes>
+          <Route index path="/" element={<WelcomePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/auth" element={<SignInPage />} />
+          <Route
+            path="/auth/register"
+            element={<AuthFormRegister isAdmin={false} />}
+          />
+          <Route
+            path="/auth/login"
+            element={<AuthFormLogin isAdmin={false} />}
+          />
+          <Route
+            path="/auth/admin/register"
+            element={<AuthFormRegister isAdmin={true} />}
+          />
+          <Route
+            path="/auth/admin/login"
+            element={<AuthFormLogin isAdmin={true} />}
+          />
+          <Route path="/upload" element={<UploadImage />} />
+          <Route path="/products" element={<Products type="all" />} />
+          {/* Додано маршрут для всіх продуктів */}
+          <Route path="/products/gold" element={<Products type="gold" />} />
+          <Route path="/products/silver" element={<Products type="silver" />} />
+          <Route path="/products/set" element={<Products type="set" />} />
+          <Route path="/products/box" element={<Products type="box" />} />
+        </Routes>
+      </>
+    </ThemeProvider>
   );
 };

@@ -22,6 +22,7 @@ export const WelcomeList = styled.ul`
 `;
 export const WelcomeItem = styled.li`
   border: 1px solid lightgray;
+  border-radius: 5px;
   padding: 20px;
 `;
 export const ImageBox = styled.img`
@@ -29,7 +30,7 @@ export const ImageBox = styled.img`
   // height: auto;
   // max-height: 90%;
   object-fit: contain;
-  margin-bottom: 15px;
+  margin: 15px;
 `;
 export const BoxContainer = styled.div`
   height: 250px;

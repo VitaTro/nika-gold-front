@@ -20,7 +20,7 @@ export const WelcomePage = () => {
       <WelcomeGeneral>Katalog</WelcomeGeneral>
       <WelcomeContainer>
         <WelcomeList>
-          <WelcomeItem>
+          <WelcomeItem className="no-theme">
             <Link to="/products/gold" style={{ textDecoration: "none" }}>
               <BoxContainer>
                 <ImageBox
@@ -32,7 +32,7 @@ export const WelcomePage = () => {
               </BoxContainer>
             </Link>
           </WelcomeItem>
-          <WelcomeItem>
+          <WelcomeItem className="no-theme">
             <Link to="/products/silver" style={{ textDecoration: "none" }}>
               <BoxContainer>
                 <ImageBox
@@ -44,7 +44,7 @@ export const WelcomePage = () => {
               </BoxContainer>
             </Link>
           </WelcomeItem>
-          <WelcomeItem>
+          <WelcomeItem className="no-theme">
             <Link to="/products/set" style={{ textDecoration: "none" }}>
               <BoxContainer>
                 <ImageBox
@@ -56,7 +56,7 @@ export const WelcomePage = () => {
               </BoxContainer>
             </Link>
           </WelcomeItem>
-          <WelcomeItem>
+          <WelcomeItem className="no-theme">
             <Link to="/products/box" style={{ textDecoration: "none" }}>
               <BoxContainer>
                 <ImageBox

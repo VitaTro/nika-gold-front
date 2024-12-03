@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   max-width: 1280px;
   height: 140px;
-  background-color: white;
+
   display: flex;
   align-items: center;
   padding: 5px 120px 10px 5px;
@@ -43,5 +43,24 @@ export const NavLinkStyled = styled(Link)`
   text-decoration: none;
   &:hover {
     color: darkgray;
+  }
+`;
+export const ThemeToggle = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  color: ${(props) => (props.theme.isDarkMode ? "#fff" : "#000")};
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    color: ${(props) => (props.theme.isDarkMode ? "#ddd" : "#333")};
   }
 `;
