@@ -20,7 +20,8 @@ export const Header = styled.header`
 export const LogoImage = styled.img`
   width: 120px;
   height: 120px;
-  margin-left: 220px;
+  margin-left: 180px;
+  transition: all 0.3s linear;
 `;
 
 export const NavList = styled.ul`

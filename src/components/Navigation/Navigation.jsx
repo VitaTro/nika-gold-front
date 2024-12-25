@@ -1,5 +1,5 @@
-// NavigationPersonal.js
 import React from "react";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice";
 import {
@@ -11,13 +11,14 @@ import {
   NavList,
   ThemeToggle,
 } from "./Navigation.styled";
-
-const NavigationPersonal = () => {
+const Navigation = () => {
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-  const logoUrl =
-    "https://res.cloudinary.com/dblh78pvc/image/upload/f_auto,q_auto/v1/My%20Brand/logo_smqqi7?_a=BAMCkGRg0";
-
+  const logoLightUrl =
+    "https://res.cloudinary.com/dblh78pvc/image/upload/v1733218461/logoLigth_zer4gb.png";
+  const logoDarkUrl =
+    "https://res.cloudinary.com/dblh78pvc/image/upload/v1733218509/logoDark_d2zgpc.png";
+  const logoUrl = isDarkMode ? logoDarkUrl : logoLightUrl;
   return (
     <Container>
       <Header>
@@ -38,7 +39,7 @@ const NavigationPersonal = () => {
             <NavLinkStyled to="/auth">Log In</NavLinkStyled>
           </NavItem>
           <ThemeToggle onClick={() => dispatch(toggleTheme())}>
-            {isDarkMode ? "🌙" : "☀️"}
+            {isDarkMode ? <FaMoon size={24} /> : <FaSun size={24} />}
           </ThemeToggle>
         </NavList>
       </Header>
@@ -46,4 +47,4 @@ const NavigationPersonal = () => {
   );
 };
 
-export default NavigationPersonal;
+export default Navigation;
