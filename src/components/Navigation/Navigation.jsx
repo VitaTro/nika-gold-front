@@ -1,7 +1,7 @@
 import React from "react";
-import { FaMoon, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice";
+
 import {
   Container,
   Header,
@@ -9,8 +9,11 @@ import {
   NavItem,
   NavLinkStyled,
   NavList,
+  Slider,
+  ThemeIcon,
   ThemeToggle,
 } from "./Navigation.styled";
+
 const Navigation = () => {
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
@@ -18,7 +21,12 @@ const Navigation = () => {
     "https://res.cloudinary.com/dblh78pvc/image/upload/v1733218461/logoLigth_zer4gb.png";
   const logoDarkUrl =
     "https://res.cloudinary.com/dblh78pvc/image/upload/v1733218509/logoDark_d2zgpc.png";
+  const sunUrl =
+    "https://res.cloudinary.com/dblh78pvc/image/upload/v1741275631/sun_prnb60.jpg";
+  const moonUrl =
+    "https://res.cloudinary.com/dblh78pvc/image/upload/v1741275631/moon_krwywm.jpg";
   const logoUrl = isDarkMode ? logoDarkUrl : logoLightUrl;
+
   return (
     <Container>
       <Header>
@@ -39,7 +47,20 @@ const Navigation = () => {
             <NavLinkStyled to="/auth">Log In</NavLinkStyled>
           </NavItem>
           <ThemeToggle onClick={() => dispatch(toggleTheme())}>
-            {isDarkMode ? <FaMoon size={24} /> : <FaSun size={24} />}
+            <Slider isDarkMode={isDarkMode}>
+              <ThemeIcon
+                src={sunUrl}
+                alt="Sun icon"
+                $position="right"
+                $visible={!isDarkMode}
+              />
+              <ThemeIcon
+                src={moonUrl}
+                alt="Moon icon"
+                $position="left"
+                $visible={isDarkMode}
+              />
+            </Slider>
           </ThemeToggle>
         </NavList>
       </Header>

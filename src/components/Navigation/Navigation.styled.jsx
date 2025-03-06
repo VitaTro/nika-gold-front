@@ -46,22 +46,47 @@ export const NavLinkStyled = styled(Link)`
     color: darkgray;
   }
 `;
-export const ThemeToggle = styled.button`
-  background: none;
-  border: none;
+
+export const ThemeToggle = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+`;
+
+export const Slider = styled.div`
+  position: absolute;
   cursor: pointer;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 40px;
-  color: ${(props) => (props.theme.isDarkMode ? "#fff" : "#000")};
-
-  &:focus {
-    outline: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 34px;
+  border: 1px solid #ccc;
+  &::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: ${(props) => (props.isDarkMode ? "30px" : "4px")};
+    bottom: 4px;
+    background-color: #333;
+    transition: 0.6s;
+    border-radius: 50%;
+    border: 1px solid #ccc;
   }
+`;
 
-  &:hover {
-    color: ${(props) => (props.theme.isDarkMode ? "#ddd" : "#333")};
-  }
+export const ThemeIcon = styled.img`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: ${(props) => (props.$position === "left" ? "4px" : "unset")};
+  right: ${(props) => (props.$position === "right" ? "4px" : "unset")};
+  opacity: ${(props) => (props.$visible ? 1 : 0)};
+  transition: left 0.6s, right 0.6s;
+  width: 22px;
+  height: 22px;
 `;
