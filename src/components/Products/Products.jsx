@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import data from "../../data.json";
 import { Loader } from "../Loader/Loader";
 import PaginationComponent from "../Pagination/Pagination";
 import ProductImageWithLightbox from "../ProductImageWithLightbox";
@@ -12,7 +12,6 @@ import {
   Tabs,
   WelcomeHeader,
 } from "./Products.styled";
-
 const Products = ({ type }) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,13 +30,16 @@ const Products = ({ type }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const endpoint = "products";
-        const response = await axios.get(
-          `http://localhost:5000/api/${endpoint}`
-        );
-        console.log("Fetched products:", response.data);
+        // const endpoint = "products";
+        // const response = await axios.get(
+        //   `http://localhost:5000/api/${endpoint}`
+        // );
+        // console.log("Fetched products:", response.data);    //тимчасово маю відключити від API
 
-        let filteredProducts = response.data;
+        // let filteredProducts = response.data;
+
+        console.log("Using local JSON data instead of API:", data);
+        let filteredProducts = data;
 
         // Фільтрування продуктів за категорією
         if (type !== "all") {
@@ -55,16 +57,19 @@ const Products = ({ type }) => {
 
         // Сортування продуктів за датою створення, нові на початку
         const sortByDate = (a, b) => {
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-          return dateB - dateA; // нові продукти на початку
+          // const dateA = new Date(a.createdAt);
+          // const dateB = new Date(b.createdAt);
+          // return dateB - dateA; // нові продукти на початку
+          const dateA = new Date(a.createdAt || Date.now());
+          const dateB = new Date(b.createdAt || Date.now());
+          return dateB - dateA;
         };
 
         const sortedProducts = filteredProducts.sort(sortByDate);
 
         setProducts(sortedProducts);
       } catch (error) {
-        console.error("Error fetching data", error);
+        console.error("Error prosessing local JSON data", error);
       } finally {
         setIsLoading(false);
       }

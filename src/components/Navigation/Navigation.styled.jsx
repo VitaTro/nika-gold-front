@@ -68,8 +68,8 @@ export const Slider = styled.div`
   &::before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 22px;
+    width: 22px;
     left: ${(props) => (props.isDarkMode ? "30px" : "4px")};
     bottom: 4px;
     background-color: #333;
