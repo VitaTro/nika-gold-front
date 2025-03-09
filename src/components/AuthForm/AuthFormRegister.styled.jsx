@@ -7,9 +7,9 @@ export const Header = styled.h2`
   font-family: "Roboto", sans-serif;
   font-size: 36px;
   font-weight: 700;
-  color: ${(props) => (props.theme.isDarkMode ? "#fff" : "#333")};
+  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#333")};
   text-shadow: ${(props) =>
-    props.theme.isDarkMode
+    props.theme.$isDarkMode
       ? "1px 1px 3px rgba(0, 0, 0, 0.7)"
       : "1px 1px 3px rgba(0, 0, 0, 0.2)"};
   margin-bottom: 20px;

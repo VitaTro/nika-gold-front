@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const Container = styled.div`
   max-width: 1280px;
   height: 140px;
-
   display: flex;
   align-items: center;
   padding: 5px 120px 10px 5px;
@@ -37,11 +36,12 @@ export const NavItem = styled.li`
 `;
 
 export const NavLinkStyled = styled(Link)`
-  color: ${(props) => (props.theme.isDarkMode ? "#fff" : "gray")};
+  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "gray")};
   font-family: "Nunito", sans-serif;
   font-weight: 400;
   font-size: 26px;
   text-decoration: none;
+
   &:hover {
     color: darkgray;
   }
@@ -61,18 +61,19 @@ export const Slider = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: white;
+  background-color: ${(props) => (props.theme.$isDarkMode ? "#222" : "#fff")};
   transition: 0.4s;
   border-radius: 34px;
   border: 1px solid #ccc;
+
   &::before {
     position: absolute;
     content: "";
     height: 22px;
     width: 22px;
-    left: ${(props) => (props.isDarkMode ? "30px" : "4px")};
+    left: ${(props) => (props.theme.$isDarkMode ? "34px" : "4px")};
     bottom: 4px;
-    background-color: #333;
+    background-color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#333")};
     transition: 0.6s;
     border-radius: 50%;
     border: 1px solid #ccc;
@@ -90,9 +91,13 @@ export const ThemeIcon = styled.img`
   width: 22px;
   height: 22px;
 `;
+
 export const Select = styled.select``;
+
 export const Label = styled.label``;
+
 export const Option = styled.option``;
+
 export const LanguageSelector = styled.div`
   position: relative;
   display: inline-block;
@@ -106,8 +111,8 @@ export const LanguageSelected = styled.div`
   padding: 5px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: ${(props) => (props.isDarkMode ? "#333" : "#fff")};
-  color: ${(props) => (props.isDarkMode ? "#fff" : "#000")};
+  background-color: ${(props) => (props.$isDarkMode ? "#333" : "#fff")};
+  color: ${(props) => (props.$isDarkMode ? "#fff" : "#000")};
 
   img {
     width: 24px;
@@ -121,12 +126,12 @@ export const LanguageOption = styled.div`
   gap: 8px;
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: ${(props) => (props.isDarkMode ? "#444" : "#f7f7f7")};
-  color: ${(props) => (props.isDarkMode ? "#fff" : "#000")};
+  background-color: ${(props) => (props.$isDarkMode ? "#444" : "#f7f7f7")};
+  color: ${(props) => (props.$isDarkMode ? "#fff" : "#000")};
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => (props.isDarkMode ? "#555" : "#e2e2e2")};
+    background-color: ${(props) => (props.$isDarkMode ? "#555" : "#e2e2e2")};
   }
 
   img {
@@ -139,13 +144,13 @@ export const Dropdown = styled.div`
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: ${(props) => (props.isDarkMode ? "#333" : "#fff")};
+  background-color: ${(props) => (props.$isDarkMode ? "#333" : "#fff")};
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: none; /* Спочатку приховано */
+  display: none;
 
   ${LanguageSelector}:hover & {
-    display: block; /* Відображається при наведенні */
+    display: block;
   }
 `;

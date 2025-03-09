@@ -1,7 +1,6 @@
-// sliderSettings.styled.jsx
 import styled from "styled-components";
 
-const SliderContainer = styled.div`
+export const SliderContainer = styled.div`
   .slick-slide {
     display: flex;
     text-align: center;
@@ -13,5 +12,3 @@ const SliderContainer = styled.div`
     // }
   }
 `;
-
-export { SliderContainer };
