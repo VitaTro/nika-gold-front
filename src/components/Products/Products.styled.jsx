@@ -11,7 +11,7 @@ export const ProductsHeader = styled.h3`
     props.theme.$isDarkMode
       ? "0 0 5px rgba(255, 255, 255, 0.8)"
       : "0 0 5px rgb(167, 182, 208)"};
-  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "gray")};
+  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#4a5a77")};
 `;
 
 export const ProductsGrid = styled.div`

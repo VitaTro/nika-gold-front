@@ -7,13 +7,10 @@ export const Header = styled.h2`
   font-family: "Roboto", sans-serif;
   font-size: 36px;
   font-weight: 700;
-  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#333")};
-  text-shadow: ${(props) =>
-    props.theme.$isDarkMode
-      ? "1px 1px 3px  rgba(0, 0, 0, 0.7)" // Світла тінь для темної теми
-      : "1px 1px 3px rgba(0, 0, 0, 0.2)"}; // Темна тінь для світлої теми
+  color: rgb(184, 195, 125);
+  text-shadow: 0 0 5px rgb(173, 226, 160);
   margin-bottom: 20px;
-  transition: color 0.3s ease, text-shadow 0.3s ease; // Плавний перехід
+  transition: color 0.4s ease, text-shadow 0.4s ease; // Плавний перехід
 `;
 
 export const AuthForm = styled.form`
