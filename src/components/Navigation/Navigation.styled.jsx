@@ -71,8 +71,8 @@ export const Slider = styled.div`
     content: "";
     height: 22px;
     width: 22px;
-    left: ${(props) => (props.theme.isDarkMode ? "30px" : "4px")};
-    right: ${(props) => (props.theme.isDarkMode ? "4px" : "30px")};
+    left: ${(props) => (props.theme.$isDarkMode ? "30px" : "4px")};
+    right: ${(props) => (props.theme.$isDarkMode ? "4px" : "30px")};
     bottom: 4px;
     background-color: #333;
     transition: 0.6s;
