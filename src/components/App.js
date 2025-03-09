@@ -1,24 +1,24 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import "../i18n";
 import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
 import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
+import { GlobalStyles } from "../redux/GlobalStyles";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
 import AuthFormRegister from "./AuthForm/AuthFormRegister";
 import Navigation from "./Navigation/Navigation";
-
-import { useSelector } from "react-redux";
-import { ThemeProvider } from "styled-components";
-import { GlobalStyles } from "../redux/GlobalStyles";
 import Products from "./Products/Products";
 import UploadImage from "./UploadImage/UploadImage";
-
 export const App = () => {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const theme = {
     isDarkMode,
   };
+
   return (
     <ThemeProvider theme={theme}>
       <>

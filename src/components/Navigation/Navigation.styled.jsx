@@ -90,3 +90,62 @@ export const ThemeIcon = styled.img`
   width: 22px;
   height: 22px;
 `;
+export const Select = styled.select``;
+export const Label = styled.label``;
+export const Option = styled.option``;
+export const LanguageSelector = styled.div`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+`;
+
+export const LanguageSelected = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: ${(props) => (props.isDarkMode ? "#333" : "#fff")};
+  color: ${(props) => (props.isDarkMode ? "#fff" : "#000")};
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+export const LanguageOption = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: ${(props) => (props.isDarkMode ? "#444" : "#f7f7f7")};
+  color: ${(props) => (props.isDarkMode ? "#fff" : "#000")};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => (props.isDarkMode ? "#555" : "#e2e2e2")};
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+export const Dropdown = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: ${(props) => (props.isDarkMode ? "#333" : "#fff")};
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: none; /* Спочатку приховано */
+
+  ${LanguageSelector}:hover & {
+    display: block; /* Відображається при наведенні */
+  }
+`;
