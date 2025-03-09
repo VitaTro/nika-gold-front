@@ -53,8 +53,9 @@ export const ThemeToggle = styled.div`
   width: 60px;
   height: 34px;
 `;
-
-export const Slider = styled.div`
+export const Slider = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isDarkMode", // Заборона передачі в DOM
+})`
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -71,10 +72,10 @@ export const Slider = styled.div`
     content: "";
     height: 22px;
     width: 22px;
-    left: ${(props) => (props.theme.$isDarkMode ? "30px" : "4px")};
-    right: ${(props) => (props.theme.$isDarkMode ? "4px" : "30px")};
+    left: ${(props) =>
+      props.isDarkMode ? "30px" : "4px"}; // Позиція змінюється залежно від теми
     bottom: 4px;
-    background-color: #333;
+    background-color: #333; // Стабільний колір, не залежить від теми
     transition: 0.6s;
     border-radius: 50%;
     border: 1px solid #ccc;
