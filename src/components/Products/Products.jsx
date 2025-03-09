@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import data from "../../data.json";
 import { Loader } from "../Loader/Loader";
 import PaginationComponent from "../Pagination/Pagination";
@@ -12,7 +13,9 @@ import {
   Tabs,
   WelcomeHeader,
 } from "./Products.styled";
+
 const Products = ({ type }) => {
+  const { t } = useTranslation();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,36 +33,22 @@ const Products = ({ type }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        // const endpoint = "products";
-        // const response = await axios.get(
-        //   `http://localhost:5000/api/${endpoint}`
-        // );
-        // console.log("Fetched products:", response.data);    //тимчасово маю відключити від API
-
-        // let filteredProducts = response.data;
-
         console.log("Using local JSON data instead of API:", data);
         let filteredProducts = data;
 
-        // Фільтрування продуктів за категорією
         if (type !== "all") {
           filteredProducts = filteredProducts.filter(
             (product) => product.category === type
           );
         }
 
-        // Фільтрування продуктів за підкатегорією
         if (activeCategory !== "all") {
           filteredProducts = filteredProducts.filter(
             (product) => product.subcategory === activeCategory
           );
         }
 
-        // Сортування продуктів за датою створення, нові на початку
         const sortByDate = (a, b) => {
-          // const dateA = new Date(a.createdAt);
-          // const dateB = new Date(b.createdAt);
-          // return dateB - dateA; // нові продукти на початку
           const dateA = new Date(a.createdAt || Date.now());
           const dateB = new Date(b.createdAt || Date.now());
           return dateB - dateA;
@@ -69,36 +58,13 @@ const Products = ({ type }) => {
 
         setProducts(sortedProducts);
       } catch (error) {
-        console.error("Error prosessing local JSON data", error);
+        console.error("Error processing local JSON data", error);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-
-    const updateConnectionStatus = () => {
-      const connection =
-        navigator.connection ||
-        navigator.mozConnection ||
-        navigator.webkitConnection;
-      if (connection) {
-        const slowConnectionTypes = ["slow-2g", "2g", "3g"];
-        setIsSlowConnection(
-          slowConnectionTypes.includes(connection.effectiveType)
-        );
-      }
-    };
-
-    updateConnectionStatus();
-    navigator.connection.addEventListener("change", updateConnectionStatus);
-
-    return () => {
-      navigator.connection.removeEventListener(
-        "change",
-        updateConnectionStatus
-      );
-    };
   }, [type, activeCategory]);
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -124,8 +90,8 @@ const Products = ({ type }) => {
     <ProductsContainer>
       <WelcomeHeader>
         {type === "all"
-          ? "Wszystkie wyroby"
-          : `${type.charAt(0).toUpperCase() + type.slice(1)} Products`}
+          ? t("all_products")
+          : t(`${type}_products`.toLowerCase())}
       </WelcomeHeader>
       {(type === "gold" || type === "silver") && (
         <Tabs>
@@ -133,49 +99,49 @@ const Products = ({ type }) => {
             onClick={() => handleCategoryChange("all")}
             className={activeCategory === "all" ? "active" : ""}
           >
-            Wszystkie
+            {t("all")}
           </TabButton>
           <TabButton
             onClick={() => handleCategoryChange("chains")}
             className={activeCategory === "chains" ? "active" : ""}
           >
-            Łańcuchи
+            {t("chains")}
           </TabButton>
           <TabButton
             onClick={() => handleCategoryChange("earrings")}
             className={activeCategory === "earrings" ? "active" : ""}
           >
-            Kolczyki
+            {t("earrings")}
           </TabButton>
           <TabButton
             onClick={() => handleCategoryChange("bracelets")}
             className={activeCategory === "bracelets" ? "active" : ""}
           >
-            Bransoletki
+            {t("bracelets")}
           </TabButton>
           <TabButton
             onClick={() => handleCategoryChange("rings")}
             className={activeCategory === "rings" ? "active" : ""}
           >
-            Pierścienie
+            {t("rings")}
           </TabButton>
           <TabButton
             onClick={() => handleCategoryChange("pendants")}
             className={activeCategory === "pendants" ? "active" : ""}
           >
-            Zawieszki
+            {t("pendants")}
           </TabButton>
           <TabButton
-            onClick={() => handleCategoryChange("tic")}
-            className={activeCategory === "tic" ? "active" : ""}
+            onClick={() => handleCategoryChange("crosses")}
+            className={activeCategory === "crosses" ? "active" : ""}
           >
-            Krzyży
+            {t("crosses")}
           </TabButton>
           <TabButton
             onClick={() => handleCategoryChange("incense")}
             className={activeCategory === "incense" ? "active" : ""}
           >
-            Kadzidło
+            {t("incense")}
           </TabButton>
         </Tabs>
       )}
@@ -184,24 +150,21 @@ const Products = ({ type }) => {
       ) : (
         <>
           <ProductsGrid>
-            {currentProducts.map((product, index) => {
-              console.log(`Rendering product ${index}: `, product);
-              return (
-                <ProductCard key={product._id}>
-                  <ProductsHeader>{product.name}</ProductsHeader>
-                  {product.photoUrl ? (
-                    <ProductImageWithLightbox
-                      src={product.photoUrl}
-                      alt={product.name}
-                    />
-                  ) : (
-                    <div>No image available</div>
-                  )}
-                  {isSlowConnection && <p>{product.description}</p>}
-                  {isAuthenticated && <p>Price: ${product.price}</p>}
-                </ProductCard>
-              );
-            })}
+            {currentProducts.map((product) => (
+              <ProductCard key={product._id}>
+                <ProductsHeader>{product.name}</ProductsHeader>
+                {product.photoUrl ? (
+                  <ProductImageWithLightbox
+                    src={product.photoUrl}
+                    alt={product.name}
+                  />
+                ) : (
+                  <div>{t("no_image")}</div>
+                )}
+                {isSlowConnection && <p>{product.description}</p>}
+                {isAuthenticated && <p>Price: ${product.price}</p>}
+              </ProductCard>
+            ))}
           </ProductsGrid>
           <PaginationComponent
             totalPages={totalPages}

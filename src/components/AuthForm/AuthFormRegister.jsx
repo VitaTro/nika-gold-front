@@ -1,8 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
+import {
+  AuthForm,
+  ButtonForm,
+  Header,
+  InputForm,
+  ItemForm,
+  LabelForm,
+  ResponsiveContainer,
+} from "./AuthFormRegister.styled";
 const AuthFormRegister = ({ isAdmin }) => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,12 +58,14 @@ const AuthFormRegister = ({ isAdmin }) => {
   };
 
   return (
-    <div>
-      <h2>{isAdmin ? "Admin Register" : "User Register"}</h2>
-      <form onSubmit={handleRegister}>
+    <ResponsiveContainer>
+      <Header>{isAdmin ? t("admin_register") : t("user_register")}</Header>
+
+      <AuthForm onSubmit={handleRegister}>
         <div>
-          <label>Username:</label>
-          <input
+          <LabelForm>{t("username_label")}</LabelForm>
+
+          <InputForm
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -61,8 +73,9 @@ const AuthFormRegister = ({ isAdmin }) => {
           />
         </div>
         <div>
-          <label>Email:</label>
-          <input
+          <LabelForm>{t("email_label")}</LabelForm>
+
+          <InputForm
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -70,8 +83,9 @@ const AuthFormRegister = ({ isAdmin }) => {
           />
         </div>
         <div>
-          <label>Password:</label>
-          <input
+          <LabelForm>{t("password_label")}</LabelForm>
+
+          <InputForm
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -80,7 +94,7 @@ const AuthFormRegister = ({ isAdmin }) => {
         </div>
         {isAdmin && isFirstAdmin && (
           <div>
-            <label>Admin Secret:</label>
+            <label>{t("admin_secret_label")}</label>
             <input
               type="text"
               value={adminSecret}
@@ -89,15 +103,15 @@ const AuthFormRegister = ({ isAdmin }) => {
             />
           </div>
         )}
-        <button type="submit">Register</button>
-      </form>
-      <p>
-        Already registered?{" "}
-        <Link to={isAdmin ? "/auth/admin/login" : "/auth/login"}>
-          Login here
-        </Link>
-      </p>
-    </div>
+        <ButtonForm type="submit">{t("register_button")}</ButtonForm>
+        <ItemForm>
+          {t("already_registered")}{" "}
+          <Link to={isAdmin ? "/auth/admin/login" : "/auth/login"}>
+            {t("login_here")}
+          </Link>
+        </ItemForm>
+      </AuthForm>
+    </ResponsiveContainer>
   );
 };
 

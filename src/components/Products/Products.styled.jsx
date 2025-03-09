@@ -50,8 +50,11 @@ export const WelcomeHeader = styled.h2`
   font-family: "Noto Sans", sans-serif;
   font-size: 42px;
   font-weight: 700;
-  color: gray;
-  text-shadow: 0 0 5px rgb(167, 182, 208);
+  color: ${(props) => (props.theme.isDarkMode ? "#fff" : "gray")};
+  text-shadow: ${(props) =>
+    props.theme.isDarkMode
+      ? "0 0 5px rgba(255, 255, 255, 0.8)"
+      : "0 0 5px rgb(167, 182, 208)"};
 `;
 
 export const Tabs = styled.div`

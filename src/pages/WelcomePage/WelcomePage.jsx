@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { SliderWelcome } from "../../components/Slider/SliderWelcome";
 import {
   BoxContainer,
@@ -14,10 +15,11 @@ import Gold from "./gold.png";
 import Set from "./set.png";
 import Silver from "./silver.png";
 export const WelcomePage = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <SliderWelcome />
-      <WelcomeGeneral>Katalog</WelcomeGeneral>
+      <WelcomeGeneral>{t("catalog")}</WelcomeGeneral>
       <WelcomeContainer>
         <WelcomeList>
           <WelcomeItem className="no-theme">
@@ -28,7 +30,7 @@ export const WelcomePage = () => {
                   alt="gold earrings"
                   style={{ width: "220px" }}
                 />
-                <BoxHeader> Chirurgiczne ZŁOTO</BoxHeader>
+                <BoxHeader>{t("gold")}</BoxHeader>
               </BoxContainer>
             </Link>
           </WelcomeItem>
@@ -40,7 +42,7 @@ export const WelcomePage = () => {
                   alt="silver earrings"
                   style={{ width: "220px" }}
                 />
-                <BoxHeader> Chirurgiczne ŚREBRO</BoxHeader>
+                <BoxHeader>{t("silver")}</BoxHeader>
               </BoxContainer>
             </Link>
           </WelcomeItem>
@@ -52,7 +54,7 @@ export const WelcomePage = () => {
                   alt="set gold and silver earrings"
                   style={{ width: "220px" }}
                 />
-                <BoxHeader>Nabory</BoxHeader>
+                <BoxHeader>{t("set")}</BoxHeader>
               </BoxContainer>
             </Link>
           </WelcomeItem>
@@ -64,7 +66,7 @@ export const WelcomePage = () => {
                   alt="box on the gold and silver earrings"
                   style={{ width: "220px" }}
                 />
-                <BoxHeader> Pakowanie prezentów</BoxHeader>
+                <BoxHeader>{t("packaging")}</BoxHeader>
               </BoxContainer>
             </Link>
           </WelcomeItem>

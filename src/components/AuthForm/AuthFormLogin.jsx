@@ -1,8 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
+import {
+  AuthForm,
+  ButtonForm,
+  Header,
+  InputForm,
+  ItemForm,
+  LabelForm,
+  ResponsiveContainer,
+} from "./AuthFormRegister.styled";
 const AuthFormLogin = ({ isAdmin }) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,12 +35,14 @@ const AuthFormLogin = ({ isAdmin }) => {
   };
 
   return (
-    <div>
-      <h2>{isAdmin ? "Admin Login" : "User Login"}</h2>
-      <form onSubmit={handleLogin}>
+    <ResponsiveContainer>
+      <Header>{isAdmin ? t("admin_login") : t("user_login")}</Header>
+
+      <AuthForm onSubmit={handleLogin}>
         <div>
-          <label>Email:</label>
-          <input
+          <LabelForm>{t("email_label")}</LabelForm>
+
+          <InputForm
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -38,23 +50,24 @@ const AuthFormLogin = ({ isAdmin }) => {
           />
         </div>
         <div>
-          <label>Password:</label>
-          <input
+          <LabelForm>{t("password_label")}</LabelForm>
+
+          <InputForm
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Don't have an account?{" "}
-        <Link to={isAdmin ? "/auth/admin/register" : "/auth/register"}>
-          Register here
-        </Link>
-      </p>
-    </div>
+        <ButtonForm type="submit">{t("login_button")}</ButtonForm>
+        <ItemForm>
+          {t("no_account")}{" "}
+          <Link to={isAdmin ? "/auth/admin/register" : "/auth/register"}>
+            {t("register_here")}
+          </Link>
+        </ItemForm>
+      </AuthForm>
+    </ResponsiveContainer>
   );
 };
 

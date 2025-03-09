@@ -37,7 +37,7 @@ export const NavItem = styled.li`
 `;
 
 export const NavLinkStyled = styled(Link)`
-  color: gray;
+  color: ${(props) => (props.theme.isDarkMode ? "#fff" : "gray")};
   font-family: "Nunito", sans-serif;
   font-weight: 400;
   font-size: 26px;

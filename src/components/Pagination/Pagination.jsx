@@ -1,14 +1,16 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { PageLink, Pagination } from "../Products/Products.styled";
 import emptyImage from "./empty.jpeg";
 import { EmptyState, StyledImage } from "./Pagination.styled";
 const PaginationComponent = ({ totalPages, currentPage, onPageChange }) => {
+  const { t } = useTranslation();
   if (totalPages === 0) {
     return (
       <EmptyState>
         <StyledImage src={emptyImage} alt="No results" />
-        <p>No results</p>
+        <p>{t("no_results")}</p>
       </EmptyState>
     );
   }
