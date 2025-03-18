@@ -6,7 +6,7 @@ export const Container = styled.div`
   height: 140px;
   display: flex;
   align-items: center;
-  padding: 5px 120px 10px 5px;
+  padding: 5px 60px 10px 5px;
 `;
 
 export const Header = styled.header`
@@ -19,8 +19,14 @@ export const Header = styled.header`
 export const LogoImage = styled.img`
   width: 120px;
   height: 120px;
-  margin-left: 120px;
+  margin-left: 100px;
   transition: all 0.5s linear;
+  @media (max-width: 768px) {
+    margin-left: 60px;
+  }
+  @media (max-width: 480px) {
+    margin-left: 20px;
+  }
 `;
 
 export const NavList = styled.ul`
@@ -29,6 +35,13 @@ export const NavList = styled.ul`
   gap: 30px;
   margin: 0;
   padding: 0;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media (max-width: 608px) {
+    display: none;
+  }
 `;
 
 export const NavItem = styled.li`
@@ -94,7 +107,13 @@ export const ThemeIcon = styled.img`
   height: 22px;
 `;
 
-export const Select = styled.select``;
+export const Select = styled.select`
+  // margin-top: 10px;
+  // @media (max-width: 768px) {
+  //   align-self: flex-end;
+  //   margin-top: 20px;
+  // }
+`;
 
 export const Label = styled.label``;
 
@@ -154,5 +173,70 @@ export const Dropdown = styled.div`
 
   ${LanguageSelector}:hover & {
     display: block;
+  }
+`;
+
+export const HamburgerButton = styled.div`
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+
+  div {
+    width: 30px;
+    height: 3px;
+    background-color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#333")};
+    transition: 0.3s;
+  }
+
+  @media (max-width: 608px) {
+    display: flex;
+  }
+`;
+export const UtilityContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  // @media (max-width: 768px) {
+  //   justify-content: flex-end;
+  //   flex-direction: column;
+  //   margin-top: 10px;
+  // }
+
+  @media (max-width: 608px) {
+    // flex-direction: column;
+    // align-items: flex-start;
+    // gap: 10px;
+    // margin-top: 15px;
+    // width: 100%;
+    display: none;
+  }
+`;
+
+export const MobileMenu = styled.ul`
+  display: none; // Ховаємо за замовчуванням
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  flex-direction: column;
+  background-color: ${(props) => (props.theme.$isDarkMode ? "#222" : "#fff")};
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    display: ${(props) => (props.isOpen ? "flex" : "none")};
+  }
+`;
+export const MobileUtilityContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  @media (max-width: 480px) {
+    gap: 10px;
   }
 `;

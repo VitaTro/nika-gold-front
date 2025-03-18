@@ -9,6 +9,7 @@ import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
 import { GlobalStyles } from "../redux/GlobalStyles";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
 import AuthFormRegister from "./AuthForm/AuthFormRegister";
+import Footer from "./Footer/Footer";
 import "./i18n/i18n";
 import Navigation from "./Navigation/Navigation";
 import Products from "./Products/Products";
@@ -53,6 +54,7 @@ export const App = () => {
           <Route path="/products/set" element={<Products type="set" />} />
           <Route path="/products/box" element={<Products type="box" />} />
         </Routes>
+        <Footer />
       </>
     </ThemeProvider>
   );

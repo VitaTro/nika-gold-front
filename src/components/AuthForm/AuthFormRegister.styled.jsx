@@ -23,7 +23,15 @@ export const AuthForm = styled.form`
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
+  margin: auto;
+  @media (max-width: 768px) {
+    padding: 20px;
+    max-width: 90%;
+  }
+  @media (max-width: 480px) {
+    padding: 15px;
+    max-width: 100%;
+  }
 `;
 export const LabelForm = styled.label`
   display: block;
@@ -95,8 +103,15 @@ export const ResponsiveContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
 
   @media (max-width: 768px) {
     padding: 15px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  @media (max-width: 480px) {
+    padding: 10px;
   }
 `;

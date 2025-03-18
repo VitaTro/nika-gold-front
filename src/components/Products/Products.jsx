@@ -22,7 +22,7 @@ const Products = ({ type }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState("all");
   const [isSlowConnection, setIsSlowConnection] = useState(false);
-  const productsPerPage = 24;
+  const productsPerPage = 18;
 
   useEffect(() => {
     const token = localStorage.getItem("token");

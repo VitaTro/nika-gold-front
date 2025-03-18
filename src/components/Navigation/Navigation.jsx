@@ -5,8 +5,11 @@ import { toggleTheme } from "../../redux/themeSlice";
 
 import {
   Container,
+  HamburgerButton,
   Header,
   LogoImage,
+  MobileMenu,
+  MobileUtilityContainer,
   NavItem,
   NavLinkStyled,
   NavList,
@@ -15,22 +18,25 @@ import {
   Slider,
   ThemeIcon,
   ThemeToggle,
+  UtilityContainer,
 } from "./Navigation.styled";
 
 const Navigation = () => {
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const { t, i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState("pl"); // Польська за замовчуванням
+  const [selectedLanguage, setSelectedLanguage] = useState("pl");
+  const [menuOpen, setMenuOpen] = useState(false); // Стан гамбургер-меню
 
   const changeLanguage = (lang) => {
     setSelectedLanguage(lang);
-    i18n.changeLanguage(lang); // Зміна мови
+    i18n.changeLanguage(lang);
   };
 
   return (
     <Container>
       <Header>
+        {/* Логотип */}
         <NavLinkStyled to="/">
           <LogoImage
             src={
@@ -41,6 +47,15 @@ const Navigation = () => {
             alt="My brand logo"
           />
         </NavLinkStyled>
+
+        {/* Гамбургер-кнопка (для мобільних) */}
+        <HamburgerButton onClick={() => setMenuOpen(!menuOpen)}>
+          <div />
+          <div />
+          <div />
+        </HamburgerButton>
+
+        {/* Меню для планшетів та десктопів */}
         <NavList>
           <NavItem>
             <NavLinkStyled to="/products">{t("products")}</NavLinkStyled>
@@ -54,6 +69,44 @@ const Navigation = () => {
           <NavItem>
             <NavLinkStyled to="/auth">{t("login")}</NavLinkStyled>
           </NavItem>
+        </NavList>
+      </Header>
+
+      {/* Мови та перемикач тем */}
+      <UtilityContainer>
+        <ThemeToggle onClick={() => dispatch(toggleTheme())}>
+          <Slider isDarkMode={isDarkMode}>
+            <ThemeIcon
+              src="https://res.cloudinary.com/dblh78pvc/image/upload/v1741275631/sun_prnb60.jpg"
+              alt="Sun icon"
+              $position="right"
+              $visible={!isDarkMode}
+            />
+            <ThemeIcon
+              src="https://res.cloudinary.com/dblh78pvc/image/upload/v1741275631/moon_krwywm.jpg"
+              alt="Moon icon"
+              $position="left"
+              $visible={isDarkMode}
+            />
+          </Slider>
+        </ThemeToggle>
+
+        <Select
+          id="language-select"
+          value={selectedLanguage}
+          onChange={(e) => changeLanguage(e.target.value)}
+        >
+          <Option value="pl">PL</Option>
+          <Option value="ua">UA</Option>
+          <Option value="en">EN</Option>
+          <Option value="de">DE</Option>
+        </Select>
+      </UtilityContainer>
+
+      {/* Меню для мобільних */}
+      <MobileMenu isOpen={menuOpen}>
+        {/* UtilityContainer у верхній частині мобільного меню */}
+        <MobileUtilityContainer>
           <ThemeToggle onClick={() => dispatch(toggleTheme())}>
             <Slider isDarkMode={isDarkMode}>
               <ThemeIcon
@@ -71,11 +124,9 @@ const Navigation = () => {
             </Slider>
           </ThemeToggle>
 
-          {/* Вибір мови */}
-
           <Select
             id="language-select"
-            value={selectedLanguage} // Поточна мова
+            value={selectedLanguage}
             onChange={(e) => changeLanguage(e.target.value)}
           >
             <Option value="pl">PL</Option>
@@ -83,8 +134,20 @@ const Navigation = () => {
             <Option value="en">EN</Option>
             <Option value="de">DE</Option>
           </Select>
-        </NavList>
-      </Header>
+        </MobileUtilityContainer>
+        <NavItem>
+          <NavLinkStyled to="/products">{t("products")}</NavLinkStyled>
+        </NavItem>
+        <NavItem>
+          <NavLinkStyled to="/contact">{t("contact")}</NavLinkStyled>
+        </NavItem>
+        <NavItem>
+          <NavLinkStyled to="/about">{t("about")}</NavLinkStyled>
+        </NavItem>
+        <NavItem>
+          <NavLinkStyled to="/auth">{t("login")}</NavLinkStyled>
+        </NavItem>
+      </MobileMenu>
     </Container>
   );
 };
