@@ -38,5 +38,6 @@
   "admin_secret_label": "Administratorgeheimnis:",
   "register_button": "Registrieren",
   "already_registered": "Schon registriert?",
-  "login_here": "Hier einloggen"
+  "login_here": "Hier einloggen",
+  "reserved": "Alle rechte vorbehalten"
 }

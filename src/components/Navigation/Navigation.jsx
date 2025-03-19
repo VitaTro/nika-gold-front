@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice";
 
 import {
+  CloseButton,
   Container,
   HamburgerButton,
   Header,
@@ -50,9 +51,9 @@ const Navigation = () => {
 
         {/* Гамбургер-кнопка (для мобільних) */}
         <HamburgerButton onClick={() => setMenuOpen(!menuOpen)}>
-          <div />
-          <div />
-          <div />
+          <div style={{ backgroundColor: isDarkMode ? "#0c0" : "#333" }} />
+          <div style={{ backgroundColor: isDarkMode ? "#0c0" : "#333" }} />
+          <div style={{ backgroundColor: isDarkMode ? "#0c0" : "#333" }} />
         </HamburgerButton>
 
         {/* Меню для планшетів та десктопів */}
@@ -104,8 +105,12 @@ const Navigation = () => {
       </UtilityContainer>
 
       {/* Меню для мобільних */}
-      <MobileMenu isOpen={menuOpen}>
-        {/* UtilityContainer у верхній частині мобільного меню */}
+      <MobileMenu
+        $isOpen={menuOpen}
+        className="mobile-menu"
+        onClick={(e) => e.stopPropagation()} // Запобігаємо закриттю при кліку всередині
+      >
+        <CloseButton onClick={() => setMenuOpen(false)}>×</CloseButton>
         <MobileUtilityContainer>
           <ThemeToggle onClick={() => dispatch(toggleTheme())}>
             <Slider isDarkMode={isDarkMode}>
@@ -123,7 +128,6 @@ const Navigation = () => {
               />
             </Slider>
           </ThemeToggle>
-
           <Select
             id="language-select"
             value={selectedLanguage}
@@ -136,16 +140,24 @@ const Navigation = () => {
           </Select>
         </MobileUtilityContainer>
         <NavItem>
-          <NavLinkStyled to="/products">{t("products")}</NavLinkStyled>
+          <NavLinkStyled to="/products" onClick={() => setMenuOpen(false)}>
+            {t("products")}
+          </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLinkStyled to="/contact">{t("contact")}</NavLinkStyled>
+          <NavLinkStyled to="/contact" onClick={() => setMenuOpen(false)}>
+            {t("contact")}
+          </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLinkStyled to="/about">{t("about")}</NavLinkStyled>
+          <NavLinkStyled to="/about" onClick={() => setMenuOpen(false)}>
+            {t("about")}
+          </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLinkStyled to="/auth">{t("login")}</NavLinkStyled>
+          <NavLinkStyled to="/auth" onClick={() => setMenuOpen(false)}>
+            {t("login")}
+          </NavLinkStyled>
         </NavItem>
       </MobileMenu>
     </Container>

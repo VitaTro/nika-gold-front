@@ -12,8 +12,15 @@ export const Container = styled.div`
 export const Header = styled.header`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
+
+  @media (max-width: 608px) {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
 `;
 
 export const LogoImage = styled.img`
@@ -39,6 +46,11 @@ export const NavList = styled.ul`
     flex-wrap: wrap;
     justify-content: center;
   }
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
   @media (max-width: 608px) {
     display: none;
   }
@@ -54,7 +66,7 @@ export const NavLinkStyled = styled(Link)`
   font-weight: 400;
   font-size: 26px;
   text-decoration: none;
-
+  list-style: none;
   &:hover {
     color: darkgray;
   }
@@ -107,13 +119,7 @@ export const ThemeIcon = styled.img`
   height: 22px;
 `;
 
-export const Select = styled.select`
-  // margin-top: 10px;
-  // @media (max-width: 768px) {
-  //   align-self: flex-end;
-  //   margin-top: 20px;
-  // }
-`;
+export const Select = styled.select``;
 
 export const Label = styled.label``;
 
@@ -165,7 +171,7 @@ export const Dropdown = styled.div`
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: ${(props) => (props.$isDarkMode ? "#333" : "#fff")};
+  background-color: ${(props) => (props.$isDarkMode ? "#fff" : "blue")};
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -185,14 +191,15 @@ export const HamburgerButton = styled.div`
   div {
     width: 30px;
     height: 3px;
-    background-color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#333")};
-    transition: 0.3s;
+    background-color: ${({ theme }) => (theme.$isDarkMode ? "#0c0" : "#333")};
+    transition: background-color 0.3s ease-in-out;
   }
 
   @media (max-width: 608px) {
     display: flex;
   }
 `;
+
 export const UtilityContainer = styled.div`
   display: flex;
   align-items: center;
@@ -215,21 +222,22 @@ export const UtilityContainer = styled.div`
 `;
 
 export const MobileMenu = styled.ul`
-  display: none; // Ховаємо за замовчуванням
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  flex-direction: column;
-  background-color: ${(props) => (props.theme.$isDarkMode ? "#222" : "#fff")};
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 70%;
+  background-color: ${(props) => (props.theme.$isDarkMode ? "#333" : "#fff")};
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
+  transform: ${({ $isOpen }) =>
+    $isOpen ? "translateX(0)" : "translateX(100%)"};
+  transition: transform 0.3s ease-in-out;
   z-index: 1000;
-
-  @media (max-width: 768px) {
-    display: ${(props) => (props.isOpen ? "flex" : "none")};
-  }
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 `;
+
 export const MobileUtilityContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -238,5 +246,19 @@ export const MobileUtilityContainer = styled.div`
 
   @media (max-width: 480px) {
     gap: 10px;
+  }
+`;
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#000")};
+
+  &:hover {
+    color: red;
   }
 `;

@@ -38,5 +38,6 @@
   "admin_secret_label": "Секрет адміністратора:",
   "register_button": "Зареєструватися",
   "already_registered": "Вже зареєстровані?",
-  "login_here": "Увійти тут"
+  "login_here": "Увійти тут",
+  "reserved": "Всі права захищені"
 }
