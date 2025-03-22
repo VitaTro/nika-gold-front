@@ -13,6 +13,9 @@ import {
   WelcomeHeader,
 } from "./Products.styled";
 
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 const Products = ({ type }) => {
   const { t } = useTranslation();
   const [products, setProducts] = useState([]);
@@ -20,7 +23,7 @@ const Products = ({ type }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState("all");
-  const [isSlowConnection, setIsSlowConnection] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const productsPerPage = 18;
 
   useEffect(() => {
@@ -32,15 +35,23 @@ const Products = ({ type }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        console.log(
+          "Fetching data from:",
+          `${BACKEND_URL}/api/products?type=${type}&category=${activeCategory}`
+        );
         const response = await fetch(
-          `https://back-fcdq.onrender.com/api/products?type=${type}&category=${activeCategory}`
+          `${BACKEND_URL}/api/products?type=${type}&category=${activeCategory}`
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error("Failed to fetch data: " + response.statusText);
         }
+
         const data = await response.json();
+        console.log("Fetched data:", data);
+
         let filteredProducts = data;
+
         if (type !== "all") {
           filteredProducts = filteredProducts.filter(
             (product) => product.category === type
@@ -62,8 +73,10 @@ const Products = ({ type }) => {
         const sortedProducts = filteredProducts.sort(sortByDate);
 
         setProducts(sortedProducts);
+        setErrorMessage("");
       } catch (error) {
-        console.error("Error fetching data from API", error);
+        console.error("Error fetching data from API:", error);
+        setErrorMessage("Failed to fetch products. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -98,58 +111,32 @@ const Products = ({ type }) => {
           ? t("all_products")
           : t(`${type}_products`.toLowerCase())}
       </WelcomeHeader>
+
       {(type === "gold" || type === "silver") && (
         <Tabs>
-          <TabButton
-            onClick={() => handleCategoryChange("all")}
-            className={activeCategory === "all" ? "active" : ""}
-          >
-            {t("all")}
-          </TabButton>
-          <TabButton
-            onClick={() => handleCategoryChange("chains")}
-            className={activeCategory === "chains" ? "active" : ""}
-          >
-            {t("chains")}
-          </TabButton>
-          <TabButton
-            onClick={() => handleCategoryChange("earrings")}
-            className={activeCategory === "earrings" ? "active" : ""}
-          >
-            {t("earrings")}
-          </TabButton>
-          <TabButton
-            onClick={() => handleCategoryChange("bracelets")}
-            className={activeCategory === "bracelets" ? "active" : ""}
-          >
-            {t("bracelets")}
-          </TabButton>
-          <TabButton
-            onClick={() => handleCategoryChange("rings")}
-            className={activeCategory === "rings" ? "active" : ""}
-          >
-            {t("rings")}
-          </TabButton>
-          <TabButton
-            onClick={() => handleCategoryChange("pendants")}
-            className={activeCategory === "pendants" ? "active" : ""}
-          >
-            {t("pendants")}
-          </TabButton>
-          <TabButton
-            onClick={() => handleCategoryChange("crosses")}
-            className={activeCategory === "crosses" ? "active" : ""}
-          >
-            {t("crosses")}
-          </TabButton>
-          <TabButton
-            onClick={() => handleCategoryChange("incense")}
-            className={activeCategory === "incense" ? "active" : ""}
-          >
-            {t("incense")}
-          </TabButton>
+          {[
+            "all",
+            "chains",
+            "earrings",
+            "bracelets",
+            "rings",
+            "pendants",
+            "crosses",
+            "incense",
+          ].map((category) => (
+            <TabButton
+              key={category}
+              onClick={() => handleCategoryChange(category)}
+              className={activeCategory === category ? "active" : ""}
+            >
+              {t(category)}
+            </TabButton>
+          ))}
         </Tabs>
       )}
+
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
       {isLoading ? (
         <Loader />
       ) : (
@@ -166,8 +153,11 @@ const Products = ({ type }) => {
                 ) : (
                   <div>{t("no_image")}</div>
                 )}
-                {isSlowConnection && <p>{product.description}</p>}
-                {isAuthenticated && <p>Price: ${product.price}</p>}
+                <p>
+                  {isAuthenticated
+                    ? `Price: $${product.price}`
+                    : t("login_to_view_price")}
+                </p>
               </ProductCard>
             ))}
           </ProductsGrid>
