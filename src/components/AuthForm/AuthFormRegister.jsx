@@ -18,17 +18,18 @@ const AuthFormRegister = ({ isAdmin }) => {
   const [password, setPassword] = useState("");
   const [adminSecret, setAdminSecret] = useState(""); // Спеціальне поле для адміністратора
   const [isFirstAdmin, setIsFirstAdmin] = useState(false); // Стан для перевірки першого адміністратора
-
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   // Перевірити, чи є перший адміністратор
   useEffect(() => {
     const checkFirstAdmin = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/auth/check-admin"
+          "https://back-fcdq.onrender.com/api/auth/check-admin"
         );
         setIsFirstAdmin(response.data.isFirstAdmin);
       } catch (error) {
-        console.error("Error checking admin", error);
+        setErrorMessage("Failed to check admin status.");
       }
     };
 
@@ -42,8 +43,8 @@ const AuthFormRegister = ({ isAdmin }) => {
     try {
       const response = await axios.post(
         isAdmin
-          ? "http://localhost:5000/api/auth/register/admin"
-          : "http://localhost:5000/api/auth/register/user",
+          ? "https://back-fcdq.onrender.com/api/auth/register/admin"
+          : "https://back-fcdq.onrender.com/api/auth/register/user",
         {
           username,
           email,
@@ -51,15 +52,17 @@ const AuthFormRegister = ({ isAdmin }) => {
           adminSecret: isFirstAdmin ? adminSecret : undefined, // Передавати поле тільки якщо це перший адміністратор
         }
       );
-      console.log("Registration successful", response.data);
+      setSuccessMessage("Registration successful!");
     } catch (error) {
-      console.error("Registration error", error);
+      setErrorMessage("Registration failed. Please try again.");
     }
   };
 
   return (
     <ResponsiveContainer>
       <Header>{isAdmin ? t("admin_register") : t("user_register")}</Header>
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
       <AuthForm onSubmit={handleRegister}>
         <div>

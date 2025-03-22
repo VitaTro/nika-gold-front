@@ -15,28 +15,35 @@ const AuthFormLogin = ({ isAdmin }) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         isAdmin
-          ? "http://localhost:5000/api/auth/admin/login"
-          : "http://localhost:5000/api/auth/login",
+          ? "https://back-fcdq.onrender.com/api/auth/admin/login"
+          : "https://back-fcdq.onrender.com/api/auth/login",
         {
           email,
           password,
         }
       );
-      console.log("Login successful", response.data);
+      localStorage.setItem("token", response.data.token);
+      setSuccessMessage("Login successful");
+      setErrorMessage("");
     } catch (error) {
-      console.error("Login error", error);
+      setErrorMessage("Login error");
+      setSuccessMessage("");
     }
   };
 
   return (
     <ResponsiveContainer>
       <Header>{isAdmin ? t("admin_login") : t("user_login")}</Header>
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
       <AuthForm onSubmit={handleLogin}>
         <div>
