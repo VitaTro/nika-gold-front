@@ -33,13 +33,14 @@ const Products = ({ type }) => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://dashboard.render.com/api/products?type=${type}&category=${activeCategory}`
+          `https://back-fcdq.onrender.com/api/products?type=${type}&category=${activeCategory}`
         );
+
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-
+        let filteredProducts = data;
         if (type !== "all") {
           filteredProducts = filteredProducts.filter(
             (product) => product.category === type
