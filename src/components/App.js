@@ -13,6 +13,7 @@ import Footer from "./Footer/Footer";
 import "./i18n/i18n";
 import Navigation from "./Navigation/Navigation";
 import Products from "./Products/Products";
+import TestRoutePage from "./TestRoutePage";
 import UploadImage from "./UploadImage/UploadImage";
 export const App = () => {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
@@ -27,6 +28,7 @@ export const App = () => {
         <Navigation />
         <Routes>
           <Route index path="/" element={<WelcomePage />} />
+          <Route path="/test" element={<TestRoutePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth" element={<SignInPage />} />

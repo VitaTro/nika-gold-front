@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import data from "../../data.json";
 import { Loader } from "../Loader/Loader";
 import PaginationComponent from "../Pagination/Pagination";
 import ProductImageWithLightbox from "../ProductImageWithLightbox";
@@ -33,8 +32,13 @@ const Products = ({ type }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        console.log("Using local JSON data instead of API:", data);
-        let filteredProducts = data;
+        const response = await fetch(
+          `https://dashboard.render.com/api/products?type=${type}&category=${activeCategory}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
 
         if (type !== "all") {
           filteredProducts = filteredProducts.filter(
@@ -58,7 +62,7 @@ const Products = ({ type }) => {
 
         setProducts(sortedProducts);
       } catch (error) {
-        console.error("Error processing local JSON data", error);
+        console.error("Error fetching data from API", error);
       } finally {
         setIsLoading(false);
       }
