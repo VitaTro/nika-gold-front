@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../../redux/themeSlice";
-
+import { toggleTheme } from "../../redux/slices/themeSlice";
+import MobileMenuNavigation from "./MobileMenuNavigation";
 import {
-  CloseButton,
   Container,
   HamburgerButton,
   Header,
   LogoImage,
-  MobileMenu,
-  MobileUtilityContainer,
   NavItem,
   NavLinkStyled,
-  NavLinkStyledMObile,
   NavList,
   Option,
   Select,
@@ -26,6 +22,7 @@ import {
 const Navigation = () => {
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("pl");
   const [menuOpen, setMenuOpen] = useState(false); // Стан гамбургер-меню
@@ -38,7 +35,6 @@ const Navigation = () => {
   return (
     <Container>
       <Header>
-        {/* Логотип */}
         <NavLinkStyled to="/">
           <LogoImage
             src={
@@ -105,99 +101,15 @@ const Navigation = () => {
         </Select>
       </UtilityContainer>
 
-      {/* Меню для мобільних */}
-      <MobileMenu
-        style={{
-          backgroundColor: isDarkMode ? "#333" : "#fff",
-          color: isDarkMode ? "gray" : "#E0E0E0",
-          transition: "background-color 0.3s ease-in-out",
-        }}
-        $isOpen={menuOpen}
-        className="mobile-menu"
-        onClick={(e) => e.stopPropagation()} // Запобігаємо закриттю при кліку всередині
-      >
-        <CloseButton
-          style={{
-            color: isDarkMode ? "green" : "black", // Зелений у темному режимі
-            transition: "color 0.3s ease-in-out",
-          }}
-          onClick={() => setMenuOpen(false)}
-        >
-          ×
-        </CloseButton>
-        <MobileUtilityContainer>
-          <ThemeToggle onClick={() => dispatch(toggleTheme())}>
-            <Slider isDarkMode={isDarkMode}>
-              <ThemeIcon
-                src="https://res.cloudinary.com/dblh78pvc/image/upload/v1741275631/sun_prnb60.jpg"
-                alt="Sun icon"
-                $position="right"
-                $visible={!isDarkMode}
-              />
-              <ThemeIcon
-                src="https://res.cloudinary.com/dblh78pvc/image/upload/v1741275631/moon_krwywm.jpg"
-                alt="Moon icon"
-                $position="left"
-                $visible={isDarkMode}
-              />
-            </Slider>
-          </ThemeToggle>
-          <Select
-            id="language-select"
-            value={selectedLanguage}
-            onChange={(e) => changeLanguage(e.target.value)}
-          >
-            <Option value="pl">PL</Option>
-            <Option value="ua">UA</Option>
-            <Option value="en">EN</Option>
-            <Option value="de">DE</Option>
-          </Select>
-        </MobileUtilityContainer>
-        <NavItem>
-          <NavLinkStyledMObile
-            to="/products"
-            onClick={() => setMenuOpen(false)}
-            style={{
-              color: isDarkMode ? "#E0E0E1" : "gray",
-            }}
-          >
-            {t("products")}
-          </NavLinkStyledMObile>
-        </NavItem>
-        <NavItem>
-          <NavLinkStyledMObile
-            to="/contact"
-            onClick={() => setMenuOpen(false)}
-            style={{
-              color: isDarkMode ? "#E0E0E1" : "gray",
-            }}
-          >
-            {t("contact")}
-          </NavLinkStyledMObile>
-        </NavItem>
-        <NavItem>
-          <NavLinkStyledMObile
-            to="/about"
-            onClick={() => setMenuOpen(false)}
-            style={{
-              color: isDarkMode ? "#E0E0E1" : "gray",
-            }}
-          >
-            {t("about")}
-          </NavLinkStyledMObile>
-        </NavItem>
-        <NavItem>
-          <NavLinkStyledMObile
-            to="/auth"
-            onClick={() => setMenuOpen(false)}
-            style={{
-              color: isDarkMode ? "#E0E0E1" : "gray",
-            }}
-          >
-            {t("login")}
-          </NavLinkStyledMObile>
-        </NavItem>
-      </MobileMenu>
+      {/* Передача стану до MobileMenuNavigation */}
+      <MobileMenuNavigation
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        isDarkMode={isDarkMode}
+        selectedLanguage={selectedLanguage}
+        changeLanguage={changeLanguage}
+        t={t}
+      />
     </Container>
   );
 };
