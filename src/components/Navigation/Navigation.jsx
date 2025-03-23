@@ -13,6 +13,7 @@ import {
   MobileUtilityContainer,
   NavItem,
   NavLinkStyled,
+  NavLinkStyledMObile,
   NavList,
   Option,
   Select,
@@ -153,7 +154,7 @@ const Navigation = () => {
           </Select>
         </MobileUtilityContainer>
         <NavItem>
-          <NavLinkStyled
+          <NavLinkStyledMObile
             to="/products"
             onClick={() => setMenuOpen(false)}
             style={{
@@ -161,10 +162,10 @@ const Navigation = () => {
             }}
           >
             {t("products")}
-          </NavLinkStyled>
+          </NavLinkStyledMObile>
         </NavItem>
         <NavItem>
-          <NavLinkStyled
+          <NavLinkStyledMObile
             to="/contact"
             onClick={() => setMenuOpen(false)}
             style={{
@@ -172,10 +173,10 @@ const Navigation = () => {
             }}
           >
             {t("contact")}
-          </NavLinkStyled>
+          </NavLinkStyledMObile>
         </NavItem>
         <NavItem>
-          <NavLinkStyled
+          <NavLinkStyledMObile
             to="/about"
             onClick={() => setMenuOpen(false)}
             style={{
@@ -183,10 +184,10 @@ const Navigation = () => {
             }}
           >
             {t("about")}
-          </NavLinkStyled>
+          </NavLinkStyledMObile>
         </NavItem>
         <NavItem>
-          <NavLinkStyled
+          <NavLinkStyledMObile
             to="/auth"
             onClick={() => setMenuOpen(false)}
             style={{
@@ -194,7 +195,7 @@ const Navigation = () => {
             }}
           >
             {t("login")}
-          </NavLinkStyled>
+          </NavLinkStyledMObile>
         </NavItem>
       </MobileMenu>
     </Container>

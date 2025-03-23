@@ -64,7 +64,7 @@ export const NavLinkStyled = styled(Link)`
   color: ${(props) => (props.theme.$isDarkMode ? "#E0E0E0" : "gray")};
   font-family: "Nunito", sans-serif;
   font-weight: 400;
-  font-size: 36px;
+  font-size: 26px;
   text-decoration: none;
   list-style: none;
   &:hover {
@@ -199,7 +199,17 @@ export const HamburgerButton = styled.div`
     display: flex;
   }
 `;
-
+export const NavLinkStyledMObile = styled(Link)`
+  color: ${(props) => (props.theme.$isDarkMode ? "#E0E0E0" : "gray")};
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  text-decoration: none;
+  list-style: none;
+  &:hover {
+    color: darkgray;
+  }
+`;
 export const UtilityContainer = styled.div`
   display: flex;
   align-items: center;
