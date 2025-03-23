@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
 import { toggleTheme } from "../../redux/slices/themeSlice";
 import MobileMenuNavigation from "./MobileMenuNavigation";
 import {
@@ -22,10 +23,13 @@ import {
 const Navigation = () => {
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+  const { isLoggedIn, userName, userPhoto } = useSelector(
+    (state) => state.auth
+  );
 
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("pl");
-  const [menuOpen, setMenuOpen] = useState(false); // Стан гамбургер-меню
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const changeLanguage = (lang) => {
     setSelectedLanguage(lang);
@@ -46,14 +50,14 @@ const Navigation = () => {
           />
         </NavLinkStyled>
 
-        {/* Гамбургер-кнопка (для мобільних) */}
+        {/* Гамбургер-кнопка */}
         <HamburgerButton onClick={() => setMenuOpen(!menuOpen)}>
           <div style={{ backgroundColor: isDarkMode ? "#0c0" : "#333" }} />
           <div style={{ backgroundColor: isDarkMode ? "#0c0" : "#333" }} />
           <div style={{ backgroundColor: isDarkMode ? "#0c0" : "#333" }} />
         </HamburgerButton>
 
-        {/* Меню для планшетів та десктопів */}
+        {/* Меню для планшетів і десктопів */}
         <NavList>
           <NavItem>
             <NavLinkStyled to="/products">{t("products")}</NavLinkStyled>
@@ -64,14 +68,51 @@ const Navigation = () => {
           <NavItem>
             <NavLinkStyled to="/about">{t("about")}</NavLinkStyled>
           </NavItem>
-          <NavItem>
-            <NavLinkStyled to="/auth">{t("login")}</NavLinkStyled>
-          </NavItem>
+          {isLoggedIn ? (
+            <>
+              <NavItem>
+                <span>{userName}</span>
+              </NavItem>
+              <NavItem>
+                <button
+                  style={{
+                    fontFamily: "Nunito, sans-serif",
+                    fontSize: "16px",
+                    color: "gray",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => dispatch(logout())}
+                >
+                  {t("logout")} {/* Відображає "Logout" */}
+                </button>
+              </NavItem>
+            </>
+          ) : (
+            <NavItem>
+              <NavLinkStyled to="/auth">{t("login")}</NavLinkStyled>
+            </NavItem>
+          )}
         </NavList>
       </Header>
 
       {/* Мови та перемикач тем */}
       <UtilityContainer>
+        {isLoggedIn && (
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img
+              src={userPhoto || "https://via.placeholder.com/50"} // Фото користувача
+              alt={`${userName}'s avatar`}
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                border: "2px solid #ccc",
+              }}
+            />
+          </div>
+        )}
         <ThemeToggle onClick={() => dispatch(toggleTheme())}>
           <Slider isDarkMode={isDarkMode}>
             <ThemeIcon
@@ -101,7 +142,7 @@ const Navigation = () => {
         </Select>
       </UtilityContainer>
 
-      {/* Передача стану до MobileMenuNavigation */}
+      {/* Мобільне меню */}
       <MobileMenuNavigation
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
@@ -109,6 +150,9 @@ const Navigation = () => {
         selectedLanguage={selectedLanguage}
         changeLanguage={changeLanguage}
         t={t}
+        isLoggedIn={isLoggedIn}
+        userName={userName}
+        userPhoto={userPhoto}
       />
     </Container>
   );
