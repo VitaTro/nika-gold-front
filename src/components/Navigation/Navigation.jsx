@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
@@ -30,7 +30,17 @@ const Navigation = () => {
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("pl");
   const [menuOpen, setMenuOpen] = useState(false);
-
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      dispatch(toggleTheme()); // Встановлюємо темну тему
+    }
+  }, [dispatch]);
+  const handleThemeToggle = () => {
+    const newTheme = !isDarkMode; // Перемикання теми
+    dispatch(toggleTheme()); // Оновлюємо стан Redux
+    localStorage.setItem("theme", newTheme ? "dark" : "light"); // Зберігаємо тему
+  };
   const changeLanguage = (lang) => {
     setSelectedLanguage(lang);
     i18n.changeLanguage(lang);
@@ -113,7 +123,7 @@ const Navigation = () => {
             />
           </div>
         )}
-        <ThemeToggle onClick={() => dispatch(toggleTheme())}>
+        <ThemeToggle onClick={handleThemeToggle}>
           <Slider isDarkMode={isDarkMode}>
             <ThemeIcon
               src="https://res.cloudinary.com/dblh78pvc/image/upload/v1741275631/sun_prnb60.jpg"
