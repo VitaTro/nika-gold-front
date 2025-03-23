@@ -4,13 +4,16 @@ export const Header = styled.h2`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center; /* Центрування тексту */
   font-family: "Roboto", sans-serif;
   font-size: 36px;
   font-weight: 700;
   color: rgb(184, 195, 125);
   text-shadow: 0 0 5px rgb(173, 226, 160);
   margin-bottom: 20px;
-  transition: color 0.4s ease, text-shadow 0.4s ease; // Плавний перехід
+  word-wrap: break-word; /* Дозволяє тексту переноситися на новий рядок */
+  max-width: 90%; /* Задає максимальну ширину для заголовка */
+  transition: color 0.4s ease, text-shadow 0.4s ease; /* Плавний перехід */
 `;
 
 export const AuthForm = styled.form`

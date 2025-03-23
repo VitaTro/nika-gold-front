@@ -106,11 +106,24 @@ const Navigation = () => {
 
       {/* Меню для мобільних */}
       <MobileMenu
+        style={{
+          backgroundColor: isDarkMode ? "#333" : "#fff",
+          color: isDarkMode ? "gray" : "#E0E0E0",
+          transition: "background-color 0.3s ease-in-out",
+        }}
         $isOpen={menuOpen}
         className="mobile-menu"
         onClick={(e) => e.stopPropagation()} // Запобігаємо закриттю при кліку всередині
       >
-        <CloseButton onClick={() => setMenuOpen(false)}>×</CloseButton>
+        <CloseButton
+          style={{
+            color: isDarkMode ? "green" : "black", // Зелений у темному режимі
+            transition: "color 0.3s ease-in-out",
+          }}
+          onClick={() => setMenuOpen(false)}
+        >
+          ×
+        </CloseButton>
         <MobileUtilityContainer>
           <ThemeToggle onClick={() => dispatch(toggleTheme())}>
             <Slider isDarkMode={isDarkMode}>
@@ -140,22 +153,46 @@ const Navigation = () => {
           </Select>
         </MobileUtilityContainer>
         <NavItem>
-          <NavLinkStyled to="/products" onClick={() => setMenuOpen(false)}>
+          <NavLinkStyled
+            to="/products"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              color: isDarkMode ? "#E0E0E1" : "gray",
+            }}
+          >
             {t("products")}
           </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLinkStyled to="/contact" onClick={() => setMenuOpen(false)}>
+          <NavLinkStyled
+            to="/contact"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              color: isDarkMode ? "#E0E0E1" : "gray",
+            }}
+          >
             {t("contact")}
           </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLinkStyled to="/about" onClick={() => setMenuOpen(false)}>
+          <NavLinkStyled
+            to="/about"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              color: isDarkMode ? "#E0E0E1" : "gray",
+            }}
+          >
             {t("about")}
           </NavLinkStyled>
         </NavItem>
         <NavItem>
-          <NavLinkStyled to="/auth" onClick={() => setMenuOpen(false)}>
+          <NavLinkStyled
+            to="/auth"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              color: isDarkMode ? "#E0E0E1" : "gray",
+            }}
+          >
             {t("login")}
           </NavLinkStyled>
         </NavItem>

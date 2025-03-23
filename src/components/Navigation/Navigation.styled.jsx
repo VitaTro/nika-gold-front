@@ -61,10 +61,10 @@ export const NavItem = styled.li`
 `;
 
 export const NavLinkStyled = styled(Link)`
-  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "gray")};
+  color: ${(props) => (props.theme.$isDarkMode ? "#E0E0E0" : "gray")};
   font-family: "Nunito", sans-serif;
   font-weight: 400;
-  font-size: 26px;
+  font-size: 36px;
   text-decoration: none;
   list-style: none;
   &:hover {
@@ -223,6 +223,7 @@ export const UtilityContainer = styled.div`
 
 export const MobileMenu = styled.ul`
   position: fixed;
+  list-style: none;
   top: 0;
   right: 0;
   height: 100vh;
@@ -231,7 +232,7 @@ export const MobileMenu = styled.ul`
   box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
   transform: ${({ $isOpen }) =>
     $isOpen ? "translateX(0)" : "translateX(100%)"};
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Плавна анімація кольору */
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -256,9 +257,13 @@ export const CloseButton = styled.button`
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: ${(props) => (props.theme.$isDarkMode ? "#fff" : "#000")};
+  color: ${(props) =>
+    props.theme.$isDarkMode
+      ? "green"
+      : "red"}; /* Хрестик зелений у темному режимі */
+  transition: color 0.3s ease-in-out;
 
   &:hover {
-    color: red;
+    color: limegreen; /* Зелений колір при наведенні */
   }
 `;
