@@ -2,54 +2,73 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
-  max-width: 1280px;
+  max-width: 1440px;
   height: 140px;
   display: flex;
   align-items: center;
+  // justify-content: space-around;
   padding: 5px 60px 10px 5px;
 `;
 
 export const Header = styled.header`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-
+  padding: 0 20px;
   @media (max-width: 608px) {
     justify-content: space-between;
     display: flex;
     align-items: center;
     width: 100%;
   }
+  @media (max-width: 890px) {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 15px;
+  }
 `;
 
 export const LogoImage = styled.img`
   width: 120px;
   height: 120px;
-  margin-left: 100px;
+  margin-right: auto;
+
   transition: all 0.5s linear;
+  @media (max-width: 968px) {
+    margin-right: 15px;
+    width: 100px;
+    height: 100px;
+  }
   @media (max-width: 768px) {
-    margin-left: 60px;
+    margin-right: 0;
+    width: 90px;
+    height: 90px;
   }
   @media (max-width: 480px) {
-    margin-left: 20px;
+    margin-left: 5px;
+    width: 80px;
+    height: 80px;
   }
 `;
 
 export const NavList = styled.ul`
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 20px;
   margin: 0;
   padding: 0;
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-    justify-content: center;
+
+  @media (min-width: 825px) {
+    justify-content: space-around;
+    width: 100%;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 890px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    justify-content: start;
+    width: 100%;
   }
   @media (max-width: 608px) {
     display: none;
@@ -58,6 +77,7 @@ export const NavList = styled.ul`
 
 export const NavItem = styled.li`
   margin: 0 15px;
+  text-align: center;
 `;
 
 export const NavLinkStyled = styled(Link)`
@@ -171,7 +191,7 @@ export const Dropdown = styled.div`
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: ${(props) => (props.$isDarkMode ? "#fff" : "blue")};
+
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -187,7 +207,9 @@ export const HamburgerButton = styled.div`
   flex-direction: column;
   cursor: pointer;
   gap: 5px;
-
+  position: absolute;
+  top: 65px;
+  right: 55px;
   div {
     width: 30px;
     height: 3px;
@@ -215,19 +237,23 @@ export const UtilityContainer = styled.div`
   align-items: center;
   gap: 20px;
 
-  // @media (max-width: 768px) {
-  //   justify-content: flex-end;
-  //   flex-direction: column;
-  //   margin-top: 10px;
-  // }
+  @media (max-width: 768px) {
+    justify-content: flex-end;
+    flex-direction: column;
+    margin-top: 10px;
+  }
 
   @media (max-width: 608px) {
-    // flex-direction: column;
-    // align-items: flex-start;
-    // gap: 10px;
-    // margin-top: 15px;
-    // width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
     display: none;
+  }
+  @media (max-width: 1016px) {
+    flex-direction: column; /* Вертикальне вирівнювання */
+    align-items: center;
   }
 `;
 

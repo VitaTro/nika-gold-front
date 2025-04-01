@@ -42,14 +42,14 @@ export const SliderWelcome = () => {
           <img
             src={Discount}
             alt="discount"
-            style={{ width: "420px", height: "240px" }}
+            // style={{ width: "420px", height: "240px" }}
           />
         </div>
         <div>
           <img
             src={Hours}
             alt="hours of work"
-            style={{ width: "420px", height: "240px" }}
+            // style={{ width: "420px", height: "240px" }}
           />
         </div>
       </Slider>
