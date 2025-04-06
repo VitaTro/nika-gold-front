@@ -25,7 +25,7 @@ const AuthFormRegister = ({ isAdmin }) => {
     const checkFirstAdmin = async () => {
       try {
         const response = await axios.get(
-          "https://back-fcdq.onrender.com/api/auth/check-admin"
+          "https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/check-admin"
         );
         setIsFirstAdmin(response.data.isFirstAdmin);
       } catch (error) {
@@ -39,8 +39,8 @@ const AuthFormRegister = ({ isAdmin }) => {
     try {
       const response = await axios.post(
         isAdmin
-          ? "https://back-fcdq.onrender.com/api/auth/register/admin"
-          : "https://back-fcdq.onrender.com/api/auth/register/user",
+          ? "nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/register/admin"
+          : "nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/register/user",
         {
           username,
           email,

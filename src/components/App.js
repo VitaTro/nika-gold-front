@@ -36,7 +36,7 @@ export const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/auth" element={<SignInPage />} />
               <Route
-                path="/auth/register"
+                path="/auth/register/user"
                 element={<AuthFormRegister isAdmin={false} />}
               />
               <Route
@@ -44,7 +44,7 @@ export const App = () => {
                 element={<AuthFormLogin isAdmin={false} />}
               />
               <Route
-                path="/auth/admin/register"
+                path="/auth/register/admin"
                 element={<AuthFormRegister isAdmin={true} />}
               />
               <Route
