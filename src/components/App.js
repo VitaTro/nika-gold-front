@@ -48,7 +48,7 @@ export const App = () => {
                 element={<AuthFormRegister isAdmin={true} />}
               />
               <Route
-                path="/auth/admin/login"
+                path="/auth/login/admin"
                 element={<AuthFormLogin isAdmin={true} />}
               />
               <Route path="/upload" element={<UploadImage />} />
