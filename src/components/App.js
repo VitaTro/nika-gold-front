@@ -8,6 +8,7 @@ import { NotFoundPage } from "../pages/NotFountPage/NotFoundPage";
 import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
 import { GlobalStyles } from "../redux/GlobalStyles";
+import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import { Wrapper } from "./App.styled";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
 import AuthFormRegister from "./AuthForm/AuthFormRegister";
@@ -52,6 +53,7 @@ export const App = () => {
                 path="/auth/login/admin"
                 element={<AuthFormLogin isAdmin={true} />}
               />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/upload" element={<UploadImage />} />
               <Route path="/products" element={<Products type="all" />} />
               {/* Додано маршрут для всіх продуктів */}
