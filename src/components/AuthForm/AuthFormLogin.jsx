@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../redux/slices/authSlice";
 import {
   AuthForm,
