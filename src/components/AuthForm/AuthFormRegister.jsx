@@ -39,8 +39,8 @@ const AuthFormRegister = ({ isAdmin }) => {
     try {
       const response = await axios.post(
         isAdmin
-          ? "nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/register/admin"
-          : "nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/register/user",
+          ? "https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/register/admin"
+          : "https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/register/user",
         {
           username,
           email,
