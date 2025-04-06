@@ -12,15 +12,19 @@ const authSlice = createSlice({
   reducers: {
     login(state, action) {
       console.log("Login Action:", action.payload);
+      console.log("Before State:", state);
       state.isLoggedIn = true;
       state.userName = action.payload.userName;
       state.userPhoto = action.payload.userPhoto;
+      console.log("After State:", state);
     },
     logout(state) {
-      console.log("Logout Action:");
+      console.log("Logout Action Triggered");
+      console.log("Before State:", state);
       state.isLoggedIn = false;
       state.userName = "";
       state.userPhoto = "";
+      console.log("After State:", state);
     },
   },
 });

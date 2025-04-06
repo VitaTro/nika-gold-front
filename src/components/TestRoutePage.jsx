@@ -3,7 +3,7 @@ const TestRoutePage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://back-fcdq.onrender.com/api/test")
+    fetch("https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/test")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network responce was not ok");

@@ -16,6 +16,7 @@ import Footer from "./Footer/Footer";
 import "./i18n/i18n";
 import Navigation from "./Navigation/Navigation";
 import Products from "./Products/Products";
+import ProtectedRoute from "./ProtectedRoute";
 import TestRoutePage from "./TestRoutePage";
 import UploadImage from "./UploadImage/UploadImage";
 export const App = () => {
@@ -53,7 +54,14 @@ export const App = () => {
                 path="/auth/login/admin"
                 element={<AuthFormLogin isAdmin={true} />}
               />
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/upload" element={<UploadImage />} />
               <Route path="/products" element={<Products type="all" />} />
               {/* Додано маршрут для всіх продуктів */}

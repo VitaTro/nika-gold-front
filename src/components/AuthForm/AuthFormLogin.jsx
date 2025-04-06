@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../redux/slices/authSlice";
 import {
   AuthForm,
   ButtonForm,
@@ -11,7 +13,10 @@ import {
   LabelForm,
   ResponsiveContainer,
 } from "./AuthFormRegister.styled";
+
 const AuthFormLogin = ({ isAdmin }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,12 +35,23 @@ const AuthFormLogin = ({ isAdmin }) => {
           password,
         }
       );
+
+      // Збереження токена в локальному сховищі
       localStorage.setItem("token", response.data.token);
-      setSuccessMessage("Login successful");
-      setErrorMessage("");
-      window.location.href = "/";
+
+      // Збереження інформації про користувача в Redux
+      dispatch(
+        login({
+          userName: response.data.userName || "Admin", // Додайте значення з API
+          userPhoto: response.data.userPhoto || "", // Додайте фото, якщо воно є
+        })
+      );
+
+      // Перенаправлення залежно від ролі
+      navigate(isAdmin ? "/admin/dashboard" : "/");
+      setSuccessMessage(t("login_success"));
     } catch (error) {
-      setErrorMessage("Login error");
+      setErrorMessage(t("login_error"));
       setSuccessMessage("");
     }
   };
@@ -49,7 +65,6 @@ const AuthFormLogin = ({ isAdmin }) => {
       <AuthForm onSubmit={handleLogin}>
         <div>
           <LabelForm>{t("email_label")}</LabelForm>
-
           <InputForm
             type="email"
             value={email}
@@ -59,7 +74,6 @@ const AuthFormLogin = ({ isAdmin }) => {
         </div>
         <div>
           <LabelForm>{t("password_label")}</LabelForm>
-
           <InputForm
             type="password"
             value={password}

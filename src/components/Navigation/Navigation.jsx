@@ -27,6 +27,7 @@ const Navigation = () => {
   const { isLoggedIn, userName, userPhoto } = useSelector(
     (state) => state.auth
   );
+  console.log("Navigation Redux State:", { isLoggedIn, userName, userPhoto });
 
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("pl");
@@ -96,7 +97,7 @@ const Navigation = () => {
                   }}
                   onClick={() => dispatch(logout())}
                 >
-                  {t("logout")} {/* Відображає "Logout" */}
+                  {t("logout")} {/* Відображає "Wyloguj się" */}
                 </button>
               </NavItem>
             </>
