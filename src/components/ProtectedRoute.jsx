@@ -1,19 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children, requiredRole }) => {
-  const { isLoggedIn, userRole } = useSelector((state) => state.auth);
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
 
-  if (!isLoggedIn) {
-    return <Navigate to="/auth/login" />; // Перенаправлення на логін
+  if (!token) {
+    return <Navigate to="/auth/login/admin" />;
   }
 
-  if (requiredRole && userRole !== requiredRole) {
-    return <Navigate to="/" />; // Перенаправлення на головну сторінку
+  // Додайте перевірку ролі, якщо потрібно
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  if (payload.role !== "admin") {
+    return <Navigate to="/" />;
   }
 
-  return children; // Якщо все добре, рендеримо дочірній компонент
+  return children;
 };
 
 export default ProtectedRoute;

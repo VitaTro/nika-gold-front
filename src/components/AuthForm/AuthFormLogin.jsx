@@ -39,6 +39,7 @@ const AuthFormLogin = ({ isAdmin }) => {
       // Збереження токена в локальному сховищі
       localStorage.setItem("token", response.data.token);
 
+      console.log("Role from response:", response.data.role);
       // Збереження інформації про користувача в Redux
       dispatch(
         login({
