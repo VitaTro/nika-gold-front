@@ -23,8 +23,8 @@ const AuthFormLogin = ({ isAdmin }) => {
     try {
       const response = await axios.post(
         isAdmin
-          ? "https://back-fcdq.onrender.com/api/auth/admin/login"
-          : "https://back-fcdq.onrender.com/api/auth/login",
+          ? "https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/login/admin"
+          : "https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/auth/login/user",
         {
           email,
           password,
