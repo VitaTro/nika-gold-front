@@ -32,7 +32,8 @@ const AuthFormRegister = ({ isAdmin }) => {
         setErrorMessage("Failed to check admin status.");
       }
     };
-  });
+    checkFirstAdmin();
+  }, []);
 
   const handleRegister = async (e) => {
     e.preventDefault();

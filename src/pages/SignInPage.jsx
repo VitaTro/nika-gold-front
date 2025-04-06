@@ -1,9 +1,9 @@
-import AuthFormRegister from "../components/AuthForm/AuthFormRegister";
+import AuthFormLogin from "../components/AuthForm/AuthFormLogin";
 
 export const SignInPage = () => {
   return (
     <>
-      <AuthFormRegister />
+      <AuthFormLogin />
     </>
   );
 };

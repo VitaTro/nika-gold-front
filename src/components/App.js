@@ -34,7 +34,7 @@ export const App = () => {
               <Route path="/test" element={<TestRoutePage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/about" element={<About />} />
-              <Route path="/auth" element={<SignInPage />} />
+              <Route path="/auth/login" element={<SignInPage />} />
               <Route
                 path="/auth/register/user"
                 element={<AuthFormRegister isAdmin={false} />}

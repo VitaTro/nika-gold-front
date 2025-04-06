@@ -21,6 +21,7 @@ import {
 } from "./Navigation.styled";
 
 const Navigation = () => {
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const { isLoggedIn, userName, userPhoto } = useSelector(
@@ -101,7 +102,9 @@ const Navigation = () => {
             </>
           ) : (
             <NavItem>
-              <NavLinkStyled to="/auth">{t("login")}</NavLinkStyled>
+              <NavLinkStyled to={isAdmin ? "/auth/admin/login" : "/auth/login"}>
+                {t("login")}
+              </NavLinkStyled>
             </NavItem>
           )}
         </NavList>

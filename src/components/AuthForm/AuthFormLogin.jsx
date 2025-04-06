@@ -33,6 +33,7 @@ const AuthFormLogin = ({ isAdmin }) => {
       localStorage.setItem("token", response.data.token);
       setSuccessMessage("Login successful");
       setErrorMessage("");
+      window.location.href = "/";
     } catch (error) {
       setErrorMessage("Login error");
       setSuccessMessage("");
@@ -69,7 +70,7 @@ const AuthFormLogin = ({ isAdmin }) => {
         <ButtonForm type="submit">{t("login_button")}</ButtonForm>
         <ItemForm>
           {t("no_account")}{" "}
-          <Link to={isAdmin ? "/auth/admin/register" : "/auth/register"}>
+          <Link to={isAdmin ? "/auth/register/admin" : "/auth/register/user"}>
             {t("register_here")}
           </Link>
         </ItemForm>
