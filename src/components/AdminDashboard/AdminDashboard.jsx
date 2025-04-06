@@ -4,22 +4,41 @@ import React, { useEffect, useState } from "react";
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("No token found. Redirecting to login...");
+        window.location.href = "/auth/login/admin";
+        return;
+      }
+
       try {
         const response = await axios.get(
-          "https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/products"
+          "https://nika-gold-back-fe0ff35469d7.herokuapp.com/api/products",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Додаємо токен до заголовків
+            },
+          }
         );
         setProducts(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch products:", error);
+        setError("Unable to load products. Please try again later.");
+        setLoading(false);
       }
     };
     fetchProducts();
   }, []);
+
   if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
   return (
     <div>
       <h1>Products Audit</h1>
@@ -58,4 +77,5 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
 export default AdminDashboard;

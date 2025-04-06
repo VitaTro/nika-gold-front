@@ -8,10 +8,18 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/auth/login/admin" />;
   }
 
-  // Додайте перевірку ролі, якщо потрібно
-  const payload = JSON.parse(atob(token.split(".")[1]));
-  if (payload.role !== "admin") {
-    return <Navigate to="/" />;
+  // Перевірка ролі з обробкою помилок
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    console.log("Decoded Payload:", payload);
+
+    if (payload.role !== "admin") {
+      console.warn("Access denied: User is not an admin.");
+      return <Navigate to="/" />;
+    }
+  } catch (error) {
+    console.error("Invalid token format:", error);
+    return <Navigate to="/auth/login/admin" />;
   }
 
   return children;
