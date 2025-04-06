@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
+import { NotFoundPage } from "../pages/NotFountPage/NotFoundPage";
 import { SignInPage } from "../pages/SignInPage";
 import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
 import { GlobalStyles } from "../redux/GlobalStyles";
@@ -61,6 +62,7 @@ export const App = () => {
               />
               <Route path="/products/set" element={<Products type="set" />} />
               <Route path="/products/box" element={<Products type="box" />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
           <Footer />
