@@ -13,9 +13,8 @@ import {
   WelcomeHeader,
 } from "./Products.styled";
 
-const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
-
+const BACKEND_URL = "https://nika-gold-back-fe0ff35469d7.herokuapp.com";
+console.log(BACKEND_URL);
 const Products = ({ type }) => {
   const { t } = useTranslation();
   const [products, setProducts] = useState([]);
