@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../redux/slices/authSlice";
+import { login } from "../../redux/auth/authSlice";
 import {
   AuthForm,
   ButtonForm,

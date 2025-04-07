@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { toggleTheme } from "../../redux/slices/themeSlice";
+import { toggleTheme } from "../../redux/themeSlice";
 import {
   CloseButton,
   MobileMenu,

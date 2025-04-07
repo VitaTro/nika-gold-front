@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../redux/slices/authSlice";
-import { toggleTheme } from "../../redux/slices/themeSlice";
+import { logout } from "../../redux/auth/authSlice";
+import { toggleTheme } from "../../redux/themeSlice";
 import MobileMenuNavigation from "./MobileMenuNavigation";
 import {
   Container,
