@@ -10,6 +10,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setIsLoggedIn(state, action) {
+      state.isLoggedIn = action.payload;
+    },
     login(state, action) {
       console.log("Login Action:", action.payload);
       console.log("Before State:", state);
@@ -28,5 +31,5 @@ const authSlice = createSlice({
     },
   },
 });
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setIsLoggedIn } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { About } from "../pages/About";
@@ -9,6 +9,7 @@ import MainPage from "../pages/MainPage/MainPage";
 import { NotFoundPage } from "../pages/NotFountPage/NotFoundPage";
 import { SignInPage } from "../pages/SignInPage";
 import { GlobalStyles } from "../redux/GlobalStyles";
+import { setIsLoggedIn } from "../redux/slices/authSlice";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import { Wrapper } from "./App.styled";
 import AuthFormLogin from "./AuthForm/AuthFormLogin";
@@ -24,6 +25,7 @@ export const App = () => {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const theme = {
@@ -34,7 +36,12 @@ export const App = () => {
       navigate("/admin/dashboard");
     }
   }, [isAdmin, navigate]);
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(setIsLoggedIn(true));
+    }
+  }, [dispatch]);
   return (
     <ThemeProvider theme={theme}>
       <>
