@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slices/authSlice";
 import { toggleTheme } from "../../redux/slices/themeSlice";
 import MobileMenuNavigation from "./MobileMenuNavigation";
@@ -22,27 +23,35 @@ import {
 
 const Navigation = () => {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-  const { isLoggedIn, userName, userPhoto } = useSelector(
-    (state) => state.auth
-  );
-  console.log("Navigation Redux State:", { isLoggedIn, userName, userPhoto });
+  const { isLoggedIn, userPhoto } = useSelector((state) => state.auth); // Видалено userName
+  console.log("Navigation Redux State:", { isLoggedIn, userPhoto });
 
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("pl");
   const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       dispatch(toggleTheme()); // Встановлюємо темну тему
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      navigate("/admin/dashboard");
+    }
+  }, [isAdmin, navigate]);
+
   const handleThemeToggle = () => {
     const newTheme = !isDarkMode; // Перемикання теми
     dispatch(toggleTheme()); // Оновлюємо стан Redux
     localStorage.setItem("theme", newTheme ? "dark" : "light"); // Зберігаємо тему
   };
+
   const changeLanguage = (lang) => {
     setSelectedLanguage(lang);
     i18n.changeLanguage(lang);
@@ -83,7 +92,21 @@ const Navigation = () => {
           {isLoggedIn ? (
             <>
               <NavItem>
-                <span>{userName}</span>
+                {/* Залишено лише аватар */}
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <img
+                    src={userPhoto || "https://via.placeholder.com/50"} // Фото користувача
+                    alt="User avatar"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      border: "2px solid #ccc",
+                    }}
+                  />
+                </div>
               </NavItem>
               <NavItem>
                 <button
@@ -113,20 +136,6 @@ const Navigation = () => {
 
       {/* Мови та перемикач тем */}
       <UtilityContainer>
-        {isLoggedIn && (
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <img
-              src={userPhoto || "https://via.placeholder.com/50"} // Фото користувача
-              alt={`${userName}'s avatar`}
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                border: "2px solid #ccc",
-              }}
-            />
-          </div>
-        )}
         <ThemeToggle onClick={handleThemeToggle}>
           <Slider isDarkMode={isDarkMode}>
             <ThemeIcon
@@ -165,8 +174,7 @@ const Navigation = () => {
         changeLanguage={changeLanguage}
         t={t}
         isLoggedIn={isLoggedIn}
-        userName={userName}
-        userPhoto={userPhoto}
+        userPhoto={userPhoto} // Видалено userName
       />
     </Container>
   );

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { About } from "../pages/About";
 import { ContactPage } from "../pages/ContactPage";
+import HomePage from "../pages/HomePage/HomePage";
+import MainPage from "../pages/MainPage/MainPage";
 import { NotFoundPage } from "../pages/NotFountPage/NotFoundPage";
 import { SignInPage } from "../pages/SignInPage";
-import { WelcomePage } from "../pages/WelcomePage/WelcomePage";
 import { GlobalStyles } from "../redux/GlobalStyles";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import { Wrapper } from "./App.styled";
@@ -20,10 +21,18 @@ import ProtectedRoute from "./ProtectedRoute";
 import TestRoutePage from "./TestRoutePage";
 import UploadImage from "./UploadImage/UploadImage";
 export const App = () => {
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const navigate = useNavigate();
+
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const theme = {
     isDarkMode,
   };
+  useEffect(() => {
+    if (isAdmin) {
+      navigate("/admin/dashboard");
+    }
+  }, [isAdmin, navigate]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,7 +42,16 @@ export const App = () => {
           <main style={{ flex: 1, overflow: "auto" }}>
             <Navigation />
             <Routes>
-              <Route index path="/" element={<WelcomePage />} />
+              <Route index path="/" element={<HomePage />} />
+              <Route
+                path="/main"
+                requiredRole="user"
+                element={
+                  <ProtectedRoute>
+                    <MainPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/test" element={<TestRoutePage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/about" element={<About />} />
@@ -57,7 +75,7 @@ export const App = () => {
               <Route
                 path="/admin/dashboard"
                 element={
-                  <ProtectedRoute>
+                  <ProtectedRoute requiredRole="admin">
                     <AdminDashboard />
                   </ProtectedRoute>
                 }

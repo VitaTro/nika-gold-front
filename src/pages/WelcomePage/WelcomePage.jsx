@@ -1,6 +1,11 @@
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { SliderWelcome } from "../../components/Slider/SliderWelcome";
+import Box from "./box.png";
+import Gold from "./gold.png";
+import Set from "./set.png";
+import Silver from "./silver.png";
 import {
   BoxContainer,
   BoxHeader,
@@ -10,12 +15,18 @@ import {
   WelcomeItem,
   WelcomeList,
 } from "./WelcomePage.styled";
-import Box from "./box.png";
-import Gold from "./gold.png";
-import Set from "./set.png";
-import Silver from "./silver.png";
+
 export const WelcomePage = () => {
   const { t } = useTranslation();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Перевірка залогування
+  const navigate = useNavigate();
+  const handleProductClick = (route) => {
+    if (!isLoggedIn) {
+      alert(t("please_login")); // Повідомлення для незалогованих користувачів
+    } else {
+      navigate(route); // Перехід до продуктів
+    }
+  };
   return (
     <div>
       <SliderWelcome />
@@ -23,7 +34,7 @@ export const WelcomePage = () => {
       <WelcomeContainer>
         <WelcomeList>
           <WelcomeItem className="no-theme">
-            <Link to="/products/gold" style={{ textDecoration: "none" }}>
+            <div onClick={() => handleProductClick("/products/gold")}>
               <BoxContainer>
                 <ImageBox
                   src={Gold}
@@ -32,10 +43,10 @@ export const WelcomePage = () => {
                 />
                 <BoxHeader>{t("gold")}</BoxHeader>
               </BoxContainer>
-            </Link>
+            </div>
           </WelcomeItem>
           <WelcomeItem className="no-theme">
-            <Link to="/products/silver" style={{ textDecoration: "none" }}>
+            <div onClick={() => handleProductClick("/products/silver")}>
               <BoxContainer>
                 <ImageBox
                   src={Silver}
@@ -44,10 +55,10 @@ export const WelcomePage = () => {
                 />
                 <BoxHeader>{t("silver")}</BoxHeader>
               </BoxContainer>
-            </Link>
+            </div>
           </WelcomeItem>
           <WelcomeItem className="no-theme">
-            <Link to="/products/set" style={{ textDecoration: "none" }}>
+            <div onClick={() => handleProductClick("/products/set")}>
               <BoxContainer>
                 <ImageBox
                   src={Set}
@@ -56,10 +67,10 @@ export const WelcomePage = () => {
                 />
                 <BoxHeader>{t("set")}</BoxHeader>
               </BoxContainer>
-            </Link>
+            </div>
           </WelcomeItem>
           <WelcomeItem className="no-theme">
-            <Link to="/products/box" style={{ textDecoration: "none" }}>
+            <div onClick={() => handleProductClick("/products/box")}>
               <BoxContainer>
                 <ImageBox
                   src={Box}
@@ -68,7 +79,7 @@ export const WelcomePage = () => {
                 />
                 <BoxHeader>{t("packaging")}</BoxHeader>
               </BoxContainer>
-            </Link>
+            </div>
           </WelcomeItem>
         </WelcomeList>
       </WelcomeContainer>
