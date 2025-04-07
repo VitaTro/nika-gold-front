@@ -22,6 +22,7 @@ import TestRoutePage from "./TestRoutePage";
 import UploadImage from "./UploadImage/UploadImage";
 export const App = () => {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
@@ -40,7 +41,7 @@ export const App = () => {
         <GlobalStyles />
         <Wrapper>
           <main style={{ flex: 1, overflow: "auto" }}>
-            <Navigation />
+            {isLoggedIn && <Navigation />}
             <Routes>
               <Route index path="/" element={<HomePage />} />
               <Route
@@ -93,7 +94,7 @@ export const App = () => {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
-          <Footer />
+          {isLoggedIn && <Footer />}
         </Wrapper>
       </>
     </ThemeProvider>
