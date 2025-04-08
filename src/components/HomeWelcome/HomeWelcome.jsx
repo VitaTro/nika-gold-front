@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet";
 import { Link as RouterLink } from "react-router-dom";
 import {
   ButtonContainer,
@@ -10,7 +9,6 @@ import HomeImage from "./gold_1.png";
 const HomeWelcome = () => {
   return (
     <>
-      <Helmet>Nika Gold | Welcome</Helmet>
       <Container>
         <img
           src={HomeImage}

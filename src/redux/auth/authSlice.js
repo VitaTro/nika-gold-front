@@ -55,16 +55,6 @@ const authSlice = createSlice({
   },
 });
 
-export const {
-  login,
-  logout,
-  checkAuth,
-  updateUser,
-  setIsLoggedIn,
-  setUser,
-  clearUser,
-} = authSlice.actions;
-
 export const fetchUserData = () => async (dispatch, getState) => {
   try {
     const token = getState().auth.token;
@@ -83,5 +73,46 @@ export const fetchUserData = () => async (dispatch, getState) => {
     dispatch(logout());
   }
 };
+export const resetPassword = (email) => async () => {
+  try {
+    const response = await axios.post("/api/auth/reset-password", { email });
+    console.log("Password reset link sent:", response.data);
+  } catch (error) {
+    console.error("Failed to reset password", error);
+  }
+};
 
+export const updatePassword = (token, newPassword) => async () => {
+  try {
+    const response = await axios.post("/api/auth/update-password", {
+      token,
+      newPassword,
+    });
+    console.log("Password updated:", response.data);
+  } catch (error) {
+    console.error("Failed to update password", error);
+  }
+};
+
+export const refreshToken = (refreshToken) => async (dispatch) => {
+  try {
+    const response = await axios.post("/api/auth/refresh-token", {
+      refreshToken,
+    });
+    dispatch(setIsLoggedIn(true));
+    dispatch(setUser(response.data));
+  } catch (error) {
+    console.error("Failed to refresh token", error);
+    dispatch(logout());
+  }
+};
+export const {
+  login,
+  logout,
+  checkAuth,
+  updateUser,
+  setIsLoggedIn,
+  setUser,
+  clearUser,
+} = authSlice.actions;
 export default authSlice.reducer;
