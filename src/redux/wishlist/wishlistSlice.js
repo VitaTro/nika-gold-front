@@ -14,45 +14,28 @@ const initialState = {
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getWishlist.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(getWishlist.fulfilled, (state, { payload }) => {
+      .addCase(getWishlist.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.products = payload;
+        state.wishlist = action.payload;
       })
-      .addCase(getWishlist.rejected, (state, { payload }) => {
+      .addCase(getWishlist.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = payload;
+        state.error = action.payload;
       })
-      .addCase(addProductToWishlist.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+      .addCase(addProductToWishlist.fulfilled, (state, action) => {
+        state.wishlist.push(action.payload); // Додаємо продукт до списку бажань
       })
-      .addCase(addProductToWishlist.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.products.push(payload);
-      })
-      .addCase(addProductToWishlist.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = payload;
-      })
-      .addCase(removeProductFromWishlist.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(removeProductFromWishlist.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.products = state.products.filter(
-          (product) => product._id !== payload
-        );
-      })
-      .addCase(removeProductFromWishlist.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = payload;
+      .addCase(removeProductFromWishlist.fulfilled, (state, action) => {
+        state.wishlist = state.wishlist.filter(
+          (product) => product.id !== action.payload
+        ); // Видаляємо продукт зі списку бажань
       });
   },
 });

@@ -1,11 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SliderWelcome } from "../../components/Slider/SliderWelcome";
-import Box from "./box.png";
-import Gold from "./gold.png";
-import Set from "./set.png";
-import Silver from "./silver.png";
 import {
   BoxContainer,
   BoxHeader,
@@ -14,36 +8,32 @@ import {
   WelcomeGeneral,
   WelcomeItem,
   WelcomeList,
-} from "./WelcomePage.styled";
+} from "./ProductsPage.styled";
+import Box from "./box.png";
+import Gold from "./gold.png";
+import Set from "./set.png";
+import Silver from "./silver.png";
 
-export const WelcomePage = () => {
+const ProductsPage = () => {
   const { t } = useTranslation();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Перевірка залогування
   const navigate = useNavigate();
   const handleProductClick = (route) => {
-    if (!isLoggedIn) {
-      alert(t("please_login")); // Повідомлення для незалогованих користувачів
-    } else {
-      navigate(route); // Перехід до продуктів
-    }
+    navigate(route);
   };
   return (
     <div>
-      <SliderWelcome />
       <WelcomeGeneral>{t("catalog")}</WelcomeGeneral>
       <WelcomeContainer>
         <WelcomeList>
           <WelcomeItem className="no-theme">
-            <div onClick={() => handleProductClick("/products/gold")}>
-              <BoxContainer>
-                <ImageBox
-                  src={Gold}
-                  alt="gold earrings"
-                  style={{ width: "220px" }}
-                />
-                <BoxHeader>{t("gold")}</BoxHeader>
-              </BoxContainer>
-            </div>
+            <BoxContainer onClick={() => handleProductClick("/products/gold")}>
+              <ImageBox
+                src={Gold}
+                alt="gold earrings"
+                style={{ width: "220px" }}
+              />
+              <BoxHeader>{t("gold")}</BoxHeader>
+            </BoxContainer>
           </WelcomeItem>
           <WelcomeItem className="no-theme">
             <div onClick={() => handleProductClick("/products/silver")}>
@@ -86,3 +76,4 @@ export const WelcomePage = () => {
     </div>
   );
 };
+export default ProductsPage;

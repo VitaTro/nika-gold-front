@@ -4,10 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../redux/auth/authSlice";
+import Loader from "../Loader/Loader";
 import {
   AuthForm,
   ButtonForm,
-  Header,
+  HeaderForm,
   InputForm,
   ItemForm,
   LabelForm,
@@ -22,9 +23,12 @@ const AuthFormLogin = ({ isAdmin }) => {
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       const response = await axios.post(
         isAdmin
@@ -43,23 +47,27 @@ const AuthFormLogin = ({ isAdmin }) => {
       // Збереження інформації про користувача в Redux
       dispatch(
         login({
-          userName: response.data.userName || "Admin", // Додайте значення з API
-          userPhoto: response.data.userPhoto || "", // Додайте фото, якщо воно є
+          userName: response.data.userName || (isAdmin ? "Admin" : "User"),
+          userPhoto: response.data.userPhoto || "",
+          userRole: response.data.role, // Зберігаємо роль у Redux
         })
       );
 
       // Перенаправлення залежно від ролі
-      navigate(isAdmin ? "/admin/dashboard" : "/");
+      navigate(isAdmin ? "/admin/dashboard" : "/main");
       setSuccessMessage(t("login_success"));
     } catch (error) {
-      setErrorMessage(t("login_error"));
+      const errorMessage = error.response?.data?.message || t("login_error");
+      setErrorMessage(errorMessage);
       setSuccessMessage("");
+    } finally {
+      setLoading(false); // Завершення завантаження
     }
   };
 
   return (
     <ResponsiveContainer>
-      <Header>{isAdmin ? t("admin_login") : t("user_login")}</Header>
+      <HeaderForm>{isAdmin ? t("admin_login") : t("user_login")}</HeaderForm>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
@@ -82,7 +90,12 @@ const AuthFormLogin = ({ isAdmin }) => {
             required
           />
         </div>
-        <ButtonForm type="submit">{t("login_button")}</ButtonForm>
+        {loading ? (
+          <Loader />
+        ) : (
+          <ButtonForm type="submit">{t("login_button")}</ButtonForm>
+        )}
+
         <ItemForm>
           {t("no_account")}{" "}
           <Link to={isAdmin ? "/auth/register/admin" : "/auth/register/user"}>

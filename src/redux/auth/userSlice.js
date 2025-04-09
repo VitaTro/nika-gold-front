@@ -32,6 +32,17 @@ export const fetchUserProfile = () => async (dispatch) => {
     console.error("Failed to fetch user profile", error);
   }
 };
+export const fetchMainData = () => async (dispatch) => {
+  try {
+    const response = await axios.get("/api/user/main");
+
+    dispatch(setProfile(response.data.user));
+    // Можна також зберегти список продуктів, якщо потрібно
+    dispatch(setProducts(response.data.products));
+  } catch (error) {
+    console.error("Failed to fetch main data", error);
+  }
+};
 
 export const fetchWishlist = () => async (dispatch) => {
   try {

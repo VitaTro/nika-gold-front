@@ -1,11 +1,11 @@
 export const applyFilters = createAsyncThunk(
-  "filters/apply",
+  "filters/applyFiltters",
   async (filters, thunkAPI) => {
     try {
-      const { data } = await axios.get(`/api/products`, {
+      const response = await axios.get(`/api/products/filters`, {
         params: filters, // Передача фільтрів у запит
       });
-      return data.products || [];
+      return response.data.filteredProducts;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

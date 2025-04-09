@@ -10,6 +10,7 @@ const initialState = {
   filteredProducts: [],
   isLoading: false,
   error: null,
+  filtersActive: false,
 };
 
 const filtersSlice = createSlice({
@@ -18,6 +19,7 @@ const filtersSlice = createSlice({
   reducers: {
     setPriceFilter(state, { payload }) {
       state.filters.priceRange = payload;
+      state.filtersActive = true;
     },
     setMaterialFilter(state, { payload }) {
       state.filters.materials = payload;

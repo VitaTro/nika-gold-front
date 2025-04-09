@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Loader } from "../Loader/Loader";
+import { useDispatch } from "react-redux";
+import { addProductToCart } from "../../redux/shopping/operationShopping";
+import { addProductToWishlist } from "../../redux/wishlist/operationWishlist";
+import Header from "../Header/Header";
+import Loader from "../Loader/Loader";
 import PaginationComponent from "../Pagination/Pagination";
 import ProductImageWithLightbox from "../ProductImageWithLightbox";
 import {
+  ProductAction,
   ProductCard,
   ProductsContainer,
   ProductsGrid,
@@ -14,8 +19,9 @@ import {
 } from "./Products.styled";
 
 const BACKEND_URL = "https://nika-gold-back-fe0ff35469d7.herokuapp.com";
-console.log(BACKEND_URL);
+
 const Products = ({ type }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,16 +40,14 @@ const Products = ({ type }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        console.log(
-          "Fetching data from:",
-          `${BACKEND_URL}/api/products?type=${type}&category=${activeCategory}`
-        );
-        const response = await fetch(
-          `${BACKEND_URL}/api/products?type=${type}&category=${activeCategory}`
-        );
+        // Формуємо запит до бекенду
+        const endpoint = `${BACKEND_URL}/api/products?type=${type}&category=${activeCategory}`;
+        console.log("Fetching data from:", endpoint);
+
+        const response = await fetch(endpoint);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch data: " + response.statusText);
+          throw new Error("Не вдалося отримати дані: " + response.statusText);
         }
 
         const data = await response.json();
@@ -100,74 +104,93 @@ const Products = ({ type }) => {
     setActiveCategory(category);
     setCurrentPage(1);
   };
+  const handleAddProductToWishlist = (product) => {
+    dispatch(addProductToWishlist(product)); // Передаємо конкретний продукт
+  };
 
+  const handleAddProductToCart = (product) => {
+    dispatch(addProductToCart(product)); // Передаємо конкретний продукт
+  };
   const totalPages = Math.ceil(products.length / productsPerPage);
 
   return (
-    <ProductsContainer>
-      <WelcomeHeader>
-        {type === "all"
-          ? t("all_products")
-          : t(`${type}_products`.toLowerCase())}
-      </WelcomeHeader>
+    <>
+      <Header />
+      <ProductsContainer>
+        <WelcomeHeader>
+          {type === "all"
+            ? t("all_products")
+            : t(`${type}_products`.toLowerCase())}
+        </WelcomeHeader>
 
-      {(type === "gold" || type === "silver") && (
-        <Tabs>
-          {[
-            "all",
-            "chains",
-            "earrings",
-            "bracelets",
-            "rings",
-            "pendants",
-            "crosses",
-            "incense",
-          ].map((category) => (
-            <TabButton
-              key={category}
-              onClick={() => handleCategoryChange(category)}
-              className={activeCategory === category ? "active" : ""}
-            >
-              {t(category)}
-            </TabButton>
-          ))}
-        </Tabs>
-      )}
-
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <ProductsGrid>
-            {currentProducts.map((product) => (
-              <ProductCard key={product._id}>
-                <ProductsHeader>{product.name}</ProductsHeader>
-                {product.photoUrl ? (
-                  <ProductImageWithLightbox
-                    src={product.photoUrl}
-                    alt={product.name}
-                  />
-                ) : (
-                  <div>{t("no_image")}</div>
-                )}
-                <p>
-                  {isAuthenticated
-                    ? `Price: $${product.price}`
-                    : t("login_to_view_price")}
-                </p>
-              </ProductCard>
+        {(type === "gold" || type === "silver") && (
+          <Tabs>
+            {[
+              "all",
+              "chains",
+              "earrings",
+              "bracelets",
+              "rings",
+              "pendants",
+              "crosses",
+              "incense",
+            ].map((category) => (
+              <TabButton
+                key={category}
+                onClick={() => handleCategoryChange(category)}
+                className={activeCategory === category ? "active" : ""}
+              >
+                {t(category)}
+              </TabButton>
             ))}
-          </ProductsGrid>
-          <PaginationComponent
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={paginate}
-          />
-        </>
-      )}
-    </ProductsContainer>
+          </Tabs>
+        )}
+
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <ProductsGrid>
+              {currentProducts.map((product) => (
+                <ProductCard key={product._id}>
+                  <ProductsHeader>{product.name}</ProductsHeader>
+                  {product.photoUrl ? (
+                    <ProductImageWithLightbox
+                      src={product.photoUrl}
+                      alt={product.name}
+                    />
+                  ) : (
+                    <div>{t("no_image")}</div>
+                  )}
+                  <p>
+                    {isAuthenticated
+                      ? `Price: ${product.price} zł`
+                      : t("login_to_view_price")}
+                  </p>
+                  <ProductAction>
+                    {/* Кнопка для додавання до списку бажань */}
+                    <button onClick={() => handleAddProductToWishlist(product)}>
+                      ❤️
+                    </button>
+                    {/* Кнопка для додавання до корзини */}
+                    <button onClick={() => handleAddProductToCart(product)}>
+                      🛒
+                    </button>
+                  </ProductAction>
+                </ProductCard>
+              ))}
+            </ProductsGrid>
+            <PaginationComponent
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={paginate}
+            />
+          </>
+        )}
+      </ProductsContainer>
+    </>
   );
 };
 

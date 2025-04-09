@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Header = styled.h2`
+export const HeaderForm = styled.h2`
   display: flex;
   justify-content: center;
   align-items: center;

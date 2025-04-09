@@ -19,7 +19,7 @@ const sliderSettings = {
   accessibility: true, // Підтримка доступності
 };
 
-export const SliderWelcome = () => {
+const SliderWelcome = () => {
   // Використання useEffect для управління aria-hidden
   useEffect(() => {
     const hiddenSlides = document.querySelectorAll('[aria-hidden="true"]');
@@ -56,3 +56,4 @@ export const SliderWelcome = () => {
     </SliderContainer>
   );
 };
+export default SliderWelcome;

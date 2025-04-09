@@ -2,9 +2,13 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getProductsList } from "./operationProducts";
 
 const initialState = {
-  productsList: [],
+  productsList: null,
   isLoading: false,
   error: null,
+  filters: {
+    type: null,
+    priceRange: [0, 1000],
+  },
 };
 
 const extraActions = [getProductsList];
@@ -31,7 +35,11 @@ const productsAnyRejectedReducer = (state, action) => {
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    setFilter: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(getProductsList.fulfilled, getProductsListFulfilledReducer)
@@ -39,5 +47,5 @@ const productsSlice = createSlice({
       .addMatcher(getActions("rejected"), productsAnyRejectedReducer)
       .addMatcher(getActions("fulfilled"), productsAnyFulfilledReducer),
 });
-
+export const { setFilter } = productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

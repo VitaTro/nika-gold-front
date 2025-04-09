@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import {
   AuthForm,
   ButtonForm,
-  Header,
+  HeaderForm,
   InputForm,
   ItemForm,
   LabelForm,
@@ -20,6 +20,8 @@ const AuthFormRegister = ({ isAdmin }) => {
   const [isFirstAdmin, setIsFirstAdmin] = useState(false); // Стан для перевірки першого адміністратора
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   // Перевірити, чи є перший адміністратор
   useEffect(() => {
     const checkFirstAdmin = async () => {
@@ -33,10 +35,11 @@ const AuthFormRegister = ({ isAdmin }) => {
       }
     };
     checkFirstAdmin();
-  }, []);
+  }, [t]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         isAdmin
@@ -51,16 +54,22 @@ const AuthFormRegister = ({ isAdmin }) => {
       );
       setSuccessMessage("Registration successful!");
     } catch (error) {
-      setErrorMessage("Registration failed. Please try again.");
+      const errorMessage =
+        error.response?.data?.message || t("registration_error");
+      setErrorMessage(errorMessage);
+    } finally {
+      setLoading(false); // Завантаження завершено
     }
   };
 
   return (
     <ResponsiveContainer>
-      <Header>{isAdmin ? t("admin_register") : t("user_register")}</Header>
+      <HeaderForm>
+        {isAdmin ? t("admin_register") : t("user_register")}
+      </HeaderForm>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-
+      {loading && <Loader />}
       <AuthForm onSubmit={handleRegister}>
         <div>
           <LabelForm>{t("username_label")}</LabelForm>

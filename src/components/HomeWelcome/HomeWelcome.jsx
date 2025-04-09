@@ -20,7 +20,7 @@ const HomeWelcome = () => {
           <SignIn to="/auth/login" as={RouterLink}>
             Log In
           </SignIn>
-          <Register to="/auth/register" as={RouterLink}>
+          <Register to="/auth/register/user" as={RouterLink}>
             Register
           </Register>
         </ButtonContainer>
