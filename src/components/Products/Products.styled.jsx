@@ -53,7 +53,6 @@ export const ProductImage = styled.img`
   border-radius: 5px;
 `;
 
-export const ProductAction = styled.div``;
 export const Pagination = styled.div`
   margin-top: 20px;
 `;

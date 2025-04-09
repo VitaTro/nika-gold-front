@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { addProductToCart } from "../../redux/shopping/operationShopping";
-import { addProductToWishlist } from "../../redux/wishlist/operationWishlist";
 import Header from "../Header/Header";
 import Loader from "../Loader/Loader";
 import PaginationComponent from "../Pagination/Pagination";
-import ProductImageWithLightbox from "../ProductImageWithLightbox";
+import ProductsCard from "../ProductsCard/ProductsCard";
 import {
-  ProductAction,
-  ProductCard,
   ProductsContainer,
   ProductsGrid,
-  ProductsHeader,
   TabButton,
   Tabs,
   WelcomeHeader,
 } from "./Products.styled";
-
 const BACKEND_URL = "https://nika-gold-back-fe0ff35469d7.herokuapp.com";
 
 const Products = ({ type }) => {
@@ -104,13 +98,7 @@ const Products = ({ type }) => {
     setActiveCategory(category);
     setCurrentPage(1);
   };
-  const handleAddProductToWishlist = (product) => {
-    dispatch(addProductToWishlist(product)); // Передаємо конкретний продукт
-  };
 
-  const handleAddProductToCart = (product) => {
-    dispatch(addProductToCart(product)); // Передаємо конкретний продукт
-  };
   const totalPages = Math.ceil(products.length / productsPerPage);
 
   return (
@@ -154,32 +142,12 @@ const Products = ({ type }) => {
           <>
             <ProductsGrid>
               {currentProducts.map((product) => (
-                <ProductCard key={product._id}>
-                  <ProductsHeader>{product.name}</ProductsHeader>
-                  {product.photoUrl ? (
-                    <ProductImageWithLightbox
-                      src={product.photoUrl}
-                      alt={product.name}
-                    />
-                  ) : (
-                    <div>{t("no_image")}</div>
-                  )}
-                  <p>
-                    {isAuthenticated
-                      ? `Price: ${product.price} zł`
-                      : t("login_to_view_price")}
-                  </p>
-                  <ProductAction>
-                    {/* Кнопка для додавання до списку бажань */}
-                    <button onClick={() => handleAddProductToWishlist(product)}>
-                      ❤️
-                    </button>
-                    {/* Кнопка для додавання до корзини */}
-                    <button onClick={() => handleAddProductToCart(product)}>
-                      🛒
-                    </button>
-                  </ProductAction>
-                </ProductCard>
+                <ProductsCard
+                  key={product._id}
+                  product={product}
+                  isAuthenticated={isAuthenticated}
+                  t={t}
+                />
               ))}
             </ProductsGrid>
             <PaginationComponent
